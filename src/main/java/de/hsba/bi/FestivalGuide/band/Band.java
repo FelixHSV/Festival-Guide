@@ -21,7 +21,7 @@ public class Band {
     private List<Festival> playsAt;
 
 
-    //Getter und Setter
+    //Getter und Setter für die Attribute
     public Long getId() {
         return id;
     }
