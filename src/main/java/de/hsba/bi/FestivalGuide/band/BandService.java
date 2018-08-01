@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 
+//Test Felix
 @Service
 @Transactional
 public class BandService {
