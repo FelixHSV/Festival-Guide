@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+//test
 @Entity(name = "Festival")
 @Table(name = "festival")
 public class Festival {
