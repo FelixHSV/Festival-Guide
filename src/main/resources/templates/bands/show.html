@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<div layout:fragment="content">
+    <div class="page-header">
+
+    </div>
+
+    <div class="container">
+        <div class="col-sm-6">
+            <h1 th:text="${band.name}"></h1>
+            <h2>Wo spielt die Band?</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Festival</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Day</th>
+                    <th scope="col">Month</th>
+                    <th scope="col">Year</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="festival : ${playsAt}">
+                    <td th:text="${festival.name}"></td>
+                    <td th:text="${festival.location}"></td>
+                    <td th:text="${festival.day}"></td>
+                    <td th:text="${festival.month}"></td>
+                    <td th:text="${festival.year}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

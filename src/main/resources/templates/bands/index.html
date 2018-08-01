@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout}">
+<body>
+<div layout:fragment="content">
+    <div class="page-header">
+
+    </div>
+
+    <div class="container">
+        <div class="row-mt-8">
+            <center>
+                <h1>Festival-Guide</h1>
+            </center>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <h2>Bands</h2>
+                <ul class="list-group">
+                    <li th:each="band : ${bands}">
+                        <a th:href="${'/bands/' + band.id}" class="list-group-item list-group-item-action" th:text="${band.name}"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-6">
+                <form sec:authorize="hasRole('ADMIN')" th:object="${bandForm}" id="createForm" action="/bands" method="post">
+                    <h2>Neues Band anlegen</h2>
+                    <div class="form-group" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
+                        <label>Name</label>
+                        <input th:field="*{name}" name="name" type="text" placeholder="Enter Name here" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Band Anlegen</button>
+                    </div>
+                    <div class="form-group">
+                        <span class="text-danger" th:errors="*{name}"/>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+</div>
+</body>

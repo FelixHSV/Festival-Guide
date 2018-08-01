@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout}">
+<body>
+<div class="mt-8" layout:fragment="content">
+    <div class="page-header">
+
+    </div>
+
+    <div class="container">
+        <div class="row-mt-8">
+            <center>
+                <h1>Festival-Guide</h1>
+            </center>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <h2>Festivals</h2>
+                    <ul class="list-group">
+                         <li th:each="festival : ${festivals}">
+                            <a th:href="${'/festivals/' + festival.id}" class="list-group-item list-group-item-action" th:text="${festival.name}"></a>
+                        </li>
+                    </ul>
+            </div>
+            <div class="col-sm-6">
+                <form sec:authorize="hasRole('ADMIN')" th:object="${festivalForm}" id="createForm" action="/festivals" method="post">
+                        <div class="form-group">
+                            <h2>Neues Festival anlegen</h2>
+                        </div>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
+                            <label>Name</label>
+                            <input name="name" type="text" placeholder="Enter Name here" class="form-control">
+                        </div>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('location') ? 'has-error' : ''}">
+                            <label>Location</label>
+                            <input name="location" type="text" placeholder="Enter Location here" class="form-control">
+                        </div>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('day') ? 'has-error' : ''}">
+                            <label>Day</label>
+                            <input name="day" type="number" placeholder="Enter Date here" min="1" step="1" max="31" class="form-control">
+                        </div>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('month') ? 'has-error' : ''}">
+                            <label>Month</label>
+                            <input name="month" placeholder="Enter Month here" type="number" min="1" step="1" max="12" class="form-control">
+                        </div>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('year') ? 'has-error' : ''}">
+                            <label>Year</label>
+                            <input name="year" placeholder="Enter Year here" type="number" min="2018" step="1" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Festival Anlegen</button>
+                        </div>
+                        <div class="form-group">
+                                <span class="text-danger" th:errors="*{name}"/><p>
+                                <span class="text-danger" th:errors="*{location}"/><p>
+                                <span class="text-danger" th:errors="*{day}"/><p>
+                                <span class="text-danger" th:errors="*{month}"/><p>
+                                <span class="text-danger" th:errors="*{year}"/><p>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
