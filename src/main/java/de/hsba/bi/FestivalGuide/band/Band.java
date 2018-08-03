@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//Test Felix
+//Test Felix Nur der HSV
 @Entity(name = "Band")
 @Table(name = "band")
 public class Band {
