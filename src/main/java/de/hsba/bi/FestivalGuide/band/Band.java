@@ -22,7 +22,7 @@ public class Band {
     private List<Festival> playsAt;
 
 
-    //Getter und Setter für die Attribute
+    //Getter und Setter test
     public Long getId() {
         return id;
     }
