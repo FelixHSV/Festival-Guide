@@ -31,7 +31,7 @@ public class User implements Comparable<User> {
 
     private String role;
 
-    private User() {
+    public User() {
     }
 
     public User(String name) {

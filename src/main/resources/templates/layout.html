@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Festivalguide</title>
     <link rel="stylesheet" type="text/css"
@@ -31,7 +32,10 @@
                     <a href="/bands" th:href="@{/bands}">Bands</a>
                 </li>
                 <li th:classappend="${module == 'tasks-ld' ? 'active' : ''}">
-                    <a href="#" th:href="@{/login}">Login</a>
+                    <a sec:authorize="anonymous" href="#" th:href="@{/login}" >Login</a>
+                </li>
+                <li th:classappend="${module == 'tasks-ld' ? 'active' : ''}">
+                    <a sec:authorize="authenticated" href="#" th:href="@{/logout}" >Logout</a>
                 </li>
             </ul>
         </div>

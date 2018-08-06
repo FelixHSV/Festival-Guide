@@ -22,6 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/festivals").permitAll()
                 .antMatchers("/bands").permitAll()
+                .antMatchers("/registration").permitAll()
                 .antMatchers("/h2-console/**").permitAll() // enable access to the h2-console
                 .antMatchers("/js/**").permitAll() // permit JS resources
                 .antMatchers("/journals/**").permitAll()

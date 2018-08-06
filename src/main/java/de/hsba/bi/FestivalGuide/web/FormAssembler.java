@@ -2,8 +2,10 @@ package de.hsba.bi.FestivalGuide.web;
 
 import de.hsba.bi.FestivalGuide.band.Band;
 import de.hsba.bi.FestivalGuide.festival.Festival;
+import de.hsba.bi.FestivalGuide.user.User;
 import de.hsba.bi.FestivalGuide.web.form.BandForm;
 import de.hsba.bi.FestivalGuide.web.form.FestivalForm;
+import de.hsba.bi.FestivalGuide.web.form.UserForm;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -37,5 +39,11 @@ public class FormAssembler {
     Band update(Band band, BandForm form){
         band.setName(form.getName());
         return band;
+    }
+
+    User update (User user, UserForm form) {
+        user.setName(form.getName());
+        user.setPassword(form.getPassword());
+        return user;
     }
 }
