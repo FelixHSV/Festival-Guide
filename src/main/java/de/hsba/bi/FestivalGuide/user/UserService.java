@@ -32,6 +32,13 @@ public class UserService {
         userRepository.save(new User(username, passwordEncoder.encode(password), role));
     }
 
+    public User createUser(User user) {
+        String username = user.getName();
+        String password = user.getPassword();
+        String role = "USER";
+        return userRepository.save(new User(username, passwordEncoder.encode(password), role));
+    }
+
     public List<User> findAll() {
         return userRepository.findAll();
     }
