@@ -40,4 +40,6 @@ public class BandService {
     public Collection<Band> getAll() { return repository.findAll();}
 
     public void delete(Long id){this.repository.deleteById(id);}
+
+    public Band save(Band band) { return repository.save(band); }
 }

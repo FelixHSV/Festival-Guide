@@ -3,8 +3,8 @@ package de.hsba.bi.FestivalGuide.festival;
 import de.hsba.bi.FestivalGuide.band.Band;
 import de.hsba.bi.FestivalGuide.band.BandService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class FestivalService {
         return repository.save(festival);
     }
 
-    public Festival getFestival (Long id){
+    public Festival getFestival(Long id){
         return repository.getOne(id);
     }
 
@@ -55,5 +55,7 @@ public class FestivalService {
     }
 
     public void delete(Long id){this.repository.deleteById(id);}
+
+    public Festival save(Festival festival) { return repository.save(festival); }
 
 }

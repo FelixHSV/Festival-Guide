@@ -21,6 +21,6 @@ public class IndexController {
     @GetMapping("/login")
     public String login() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return auth instanceof AnonymousAuthenticationToken ? "login" : "redirect:/";
+        return auth instanceof AnonymousAuthenticationToken ? "/login" : "redirect:/";
     }
 }

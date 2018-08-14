@@ -10,57 +10,78 @@
 
     <div class="container">
         <div class="row">
-                <h1 th:text="${festival.name}"></h1>
+            <h1 th:text="${festival.name}"></h1>
         </div>
-            <div class="row">
-                <form th:action="${'/festivals/' + festival.id + '/delete'}" method="post" class="form">
-                    <button type="submit" class="btn btn-danger">Löschen</button>
+
+        <div class="row">
+            <form th:action="${'/festivals/' + festival.id + '/delete'}" method="post" class="form" id="deleteFormFestival">
+                <button type="button" class="btn btn-default" id="changeButtonFestival">Bearbeiten</button>
+                <button type="submit" class="btn btn-danger">Löschen</button>
+            </form>
+            <br>
+        </div>
+        <div class="row" id="changeDivFestival">
+            <h3>Festival bearbeiten</h3>
+                <form th:action="${'/festivals/' + festival.id}" method="post" id="changeForm" th:object="${festivalForm}" class="">
+                    <div class="form-group" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
+                        <div class="col-sm-6"><label>Name</label></div>
+                        <div class="col-sm-6"><label>Location</label></div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="changeName" name="name" th:field="*{name}" placeholder="Neuer Festivalname"/>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="changeLocation" name="location" th:field="*{location}" placeholder="Neuer Festivalname"/>
+                        </div>
+                        <div class="col-sm-12"><label>Datum</label></div>
+                        <div class="col-sm-1">
+                            <input type="text" class="form-control" id="changeDay" name="day" th:field="*{day}" placeholder="Neuer Festivalname"/>
+                        </div>
+                        <div class="col-sm-1">
+                            <input type="text" class="form-control" id="cangeMonth" name="month" th:field="*{month}" placeholder="Neuer Festivalname"/>
+                        </div>
+                        <div class="col-sm-1">
+                            <input type="text" class="form-control" id="changeYear" name="year" th:field="*{year}" placeholder="Neuer Festivalname"/>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-primary">Ändern</button>
+                        </div>
+                    </div>
                 </form>
-            </div>
+        </div>
+
         <div class="row">
             <div class="col-sm-6">
-                <h2>Lineup:</h2>
+                    <h2 class="display-1">Infos:</h2>
+                    <dl class="row">
+                        <dt class="col-sm-3">Tag:</dt>
+                        <dd class="col-sm-9" th:text="${festival.day}">asdfasdf</dd>
+                        <dt class="col-sm-3">Monat:</dt>
+                        <dd class="col-sm-9" th:text="${festival.month}"></dd>
+                        <dt class="col-sm-3">Jahr:</dt>
+                        <dd class="col-sm-9" th:text="${festival.year}"></dd>
+                        <dt class="col-sm-3">Location:</dt>
+                        <dd class="col-sm-9" th:text="${festival.location}"></dd>
+                    </dl>
+            </div>
+            <div class="col-sm-6">
+                <h2>Künstler:</h2>
                 <table th:if="${!festival.plays.empty}" class="table">
-                    <tr>
-                        <th>Name der Bands</th>
-                    </tr>
 
                     <tr th:each="band : ${plays}">
                         <td th:text="${band.name}"></td>
                     </tr>
                 </table>
             </div>
-            <div class="col-sm-6">
-                <div class="jumbotron">
-                    <h2 class="display-1">Infos:</h2>
-                        <dl class="row">
-                            <dt class="col-sm-3">Tag:</dt>
-                            <dd class="col-sm-9" th:text="${festival.day}">asdfasdf</dd>
-                            <dt class="col-sm-3">Monat:</dt>
-                            <dd class="col-sm-9" th:text="${festival.month}"></dd>
-                            <dt class="col-sm-3">Jahr:</dt>
-                            <dd class="col-sm-9" th:text="${festival.year}"></dd>
-                            <dt class="col-sm-3">Location:</dt>
-                            <dd class="col-sm-9" th:text="${festival.location}"></dd>
-                        </dl>
-                </div>
-            </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <h2>Band hinzufügen</h2>
-                <ul class="list-group">
-                    <li th:each="band : ${playsNot}">
-                        <a th:href="${'/festivals/add/' + band.id + '/' + festival.id}" class="list-group-item list-group-item-action" th:text="${band.name}"></a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-sm-6">
                 <h2>Neue Band erstellen und hinzufügen</h2>
-                <form sec:authorize="authenticated" th:object="${bandForm2}" id="createForm" th:action="${'/festivals/' + festival.id}" method="post">
+                <form sec:authorize="authenticated" th:object="${bandForm}" id="createForm"
+                      th:action="${'/festivals/' + festival.id + '/add'}" method="post">
                     <div class="form-group" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
                         <label>Name</label>
-                        <input th:field="*{name}" name="name" type="text" placeholder="Enter Name here" class="form-control">
+                        <input th:field="*{name}" name="name" type="text" placeholder="Enter Name here"
+                               class="form-control">
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Band Anlegen</button>
@@ -70,10 +91,18 @@
                     </div>
                 </form>
             </div>
+            <div class="col-sm-6">
+                <h2>Band hinzufügen</h2>
+                <ul class="list-group">
+                    <div th:each="band : ${playsNot}">
+                        <a th:href="${'/festivals/' + festival.id + '/add/' + band.id}"
+                           class="list-group-item list-group-item-action" th:text="${band.name}"></a>
+                    </div>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
-
 
 
 </body>

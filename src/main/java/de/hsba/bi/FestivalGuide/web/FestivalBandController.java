@@ -1,4 +1,4 @@
-package de.hsba.bi.FestivalGuide.web;
+/*package de.hsba.bi.FestivalGuide.web;
 
 import de.hsba.bi.FestivalGuide.band.Band;
 import de.hsba.bi.FestivalGuide.band.BandService;
@@ -131,7 +131,7 @@ public class FestivalBandController {
     }
 
 
-
+/*
 
 
 

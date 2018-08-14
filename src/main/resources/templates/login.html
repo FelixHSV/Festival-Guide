@@ -2,47 +2,57 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+
 <body>
 <div layout:fragment="content">
-    <div class="page-header">
-        <h1>Login</h1>
+    <div class="container">
+        <div class="row">
+            <div class="page-header">
+            </div>
+
+            <h2>Login</h2>
+            <form action="/login" method="post" class="form-horizontal">
+                <div th:if="${param.error}" class="form-group">
+                    <div class="col-sm-10 text-danger">
+                        <strong>Login fehlgeschlagen</strong>
+                    </div>
+                </div>
+
+                <div th:if="${param.logout}" class="form-group">
+                    <div class=" col-sm-10">
+                        <strong>Sie haben sich erfolgreich abgemeldet</strong>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputUsername" class="col-sm-1 control-label">Nutzername</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="inputUsername" name="username" placeholder="Nutzername"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword" class="col-sm-1 control-label">Passwort</label>
+                    <div class="col-sm-6">
+                        <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Passwort"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-primary">Anmelden</button>
+                    </div>
+                </div>
+            </form>
+            <form action="/registration">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Registrieren</button>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <form action="/login" method="post" class="form-horizontal">
-        <div th:if="${param.error}" class="form-group">
-            <div class="col-sm-offset-2 col-sm-10 text-danger">
-                <strong>Login fehlgeschlagen</strong>
-            </div>
-        </div>
-
-        <div th:if="${param.logout}" class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <strong>Sie haben sich erfolgreich abgemeldet</strong>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="inputUsername" class="col-sm-2 control-label">Nutzername</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputUsername" name="username" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputPassword" class="col-sm-2 control-label">Passwort</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPassword" name="password" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-primary">Anmelden</button>
-            </div>
-        </div>
-    </form>
-    <div>
-        <a href="http://localhost:8080/registration">Registrieren</a>
-    </div>
-
 
 
 </div>

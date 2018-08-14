@@ -6,41 +6,49 @@
     <meta charset="UTF-8">
     <title>Registration</title>
 </head>
-<body>
 
+<body>
 <div layout:fragment="content">
-    <div class="page-header">
-        <h1>Registration</h1>
-    </div>
-    <div class="col-sm-6">
-        <form th:object="${userForm}" id="createForm" action="/registration" method="post">
-            <div class="form-group">
-                <h2>Neuen Account anlegen</h2>
+    <div class="container">
+        <div class="row">
+            <div class="page-header">
             </div>
-            <div class="form-group" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
-                <label>Name</label>
-                <input name="name" type="text" placeholder="Name" class="form-control">
-            </div>
-            <div class="form-group" th:classappend="${#fields.hasErrors('password') ? 'has-error' : ''}">
-                <label>Passwort</label>
-                <input name="password" type="password" placeholder="Passwort" class="form-control">
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Account Anlegen</button>
-            </div>
-            <div class="form-group">
-                <span class="text-danger" th:errors="*{name}"/>
-                <p>
+            <h2>Neuen Account anlegen</h2>
+            <form th:object="${userForm}" id="createForm" action="/registration" method="post" class="form-horizontal">
+                <div class="form-group" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
+                    <label for="nutzername" class="col-sm-1 control-label">Nutzername</label>
+                    <div class="col-sm-6">
+                        <input name="name" type="text" placeholder="Nutzername" class="form-control"
+                               id="nutzername">
+                    </div>
+                    <span class="text-danger" th:errors="*{name}"/>
+                </div>
+                <div class="form-group" th:classappend="${#fields.hasErrors('password') ? 'has-error' : ''}">
+                    <label for="passwort" class="col-sm-1 control-label">Passwort</label>
+                    <div class="col-sm-6">
+                        <input name="password" type="password" placeholder="Passwort" class="form-control"
+                               id="passwort">
+                    </div>
                     <span class="text-danger" th:errors="*{password}"/>
-                <p>
-            </div>
-        </form>
-        <h2>User</h2>
-        <ul class="list-group">
-            <li th:each="user : ${users}">
-                <b th:text="${user.name}"></b>
-            </li>
-        </ul>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-primary">Registrieren</button>
+                    </div>
+                </div>
+            </form>
+            <form action="/login">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Anmelden</button>
+                </div>
+            </form>
+            <!--<h2>User</h2>
+            <ul class="list-group">
+                <li th:each="user : ${users}">
+                    <b th:text="${user.name}"></b>
+                </li>
+            </ul>-->
+        </div>
     </div>
 </div>
 

@@ -14,17 +14,15 @@
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="/">
-                <img src="https://emojipedia-us.s3.amazonaws.com/thumbs/160/apple/129/sign-of-the-horns_1f918.png" width="30" height="30" alt="">
+                <!--<img src="https://emojipedia-us.s3.amazonaws.com/thumbs/160/apple/129/sign-of-the-horns_1f918.png" width="30" height="30" alt="">-->
+            <p>Festival Guide</p>
             </a>
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Home</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
+                <li th:classappend="${module == 'home' ? 'active' : ''}">
+                    <a href="/" th:href="@{/}">Home</a>
+                </li>
                 <li th:classappend="${module == 'home' ? 'active' : ''}">
                     <a href="/festivals" th:href="@{/festivals}">Festivals</a>
                 </li>
@@ -34,8 +32,14 @@
                 <li th:classappend="${module == 'tasks-ld' ? 'active' : ''}">
                     <a sec:authorize="anonymous" href="#" th:href="@{/login}" >Login</a>
                 </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
                 <li th:classappend="${module == 'tasks-ld' ? 'active' : ''}">
-                    <a sec:authorize="authenticated" href="#" th:href="@{/logout}" >Logout</a>
+                    <p class="navbar-btn">
+                        <a sec:authorize="authenticated" href="#" th:href="@{/logout}" class="btn btn-danger btn-md">
+                            <span class="glyphicon glyphicon-off"></span> Logout
+                        </a>
+                    </p>
                 </li>
             </ul>
         </div>

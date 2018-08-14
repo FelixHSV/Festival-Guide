@@ -11,17 +11,14 @@
 
     <div class="container">
         <div class="row-mt-8">
-            <center>
-                <h1>Festival-Guide</h1>
-            </center>
         </div>
         <div class="row">
             <div class="col-sm-6">
                 <h2>Festivals</h2>
                     <ul class="list-group">
-                         <li th:each="festival : ${festivals}">
+                         <div th:each="festival : ${festivals}">
                             <a th:href="${'/festivals/' + festival.id}" class="list-group-item list-group-item-action" th:text="${festival.name}"></a>
-                        </li>
+                        </div>
                     </ul>
             </div>
             <div class="col-sm-6">
@@ -31,23 +28,23 @@
                         </div>
                         <div class="form-group" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
                             <label>Name</label>
-                            <input name="name" type="text" placeholder="Enter Name here" class="form-control">
+                            <input name="name" type="text" placeholder="Name" class="form-control">
                         </div>
                         <div class="form-group" th:classappend="${#fields.hasErrors('location') ? 'has-error' : ''}">
                             <label>Location</label>
-                            <input name="location" type="text" placeholder="Enter Location here" class="form-control">
+                            <input name="location" type="text" placeholder="Location" class="form-control">
                         </div>
                         <div class="form-group" th:classappend="${#fields.hasErrors('day') ? 'has-error' : ''}">
-                            <label>Day</label>
-                            <input name="day" type="number" placeholder="Enter Date here" min="1" step="1" max="31" class="form-control">
+                            <label>Tag</label>
+                            <input name="day" type="number" placeholder="Tag" min="1" step="1" max="31" class="form-control">
                         </div>
                         <div class="form-group" th:classappend="${#fields.hasErrors('month') ? 'has-error' : ''}">
-                            <label>Month</label>
-                            <input name="month" placeholder="Enter Month here" type="number" min="1" step="1" max="12" class="form-control">
+                            <label>Monat</label>
+                            <input name="month" placeholder="Monat" type="number" min="1" step="1" max="12" class="form-control">
                         </div>
                         <div class="form-group" th:classappend="${#fields.hasErrors('year') ? 'has-error' : ''}">
-                            <label>Year</label>
-                            <input name="year" placeholder="Enter Year here" type="number" min="2018" step="1" class="form-control">
+                            <label>Jahr</label>
+                            <input name="year" placeholder="Jahr" type="number" min="2018" step="1" class="form-control">
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Festival Anlegen</button>

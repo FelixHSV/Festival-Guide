@@ -25,7 +25,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/h2-console/**").permitAll() // enable access to the h2-console
                 .antMatchers("/js/**").permitAll() // permit JS resources
-                .antMatchers("/journals/**").permitAll()
                 .antMatchers("/users/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
@@ -33,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .permitAll()
                 .and()
-                .logout().logoutSuccessUrl("/journals/")
+                .logout().logoutSuccessUrl("/login/")
                 .permitAll();
     }
 
