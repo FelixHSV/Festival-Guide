@@ -4,54 +4,46 @@
       layout:decorate="~{layout}">>
 <head>
     <meta charset="UTF-8">
-    <title>Registration</title>
+    <title>Registrierung</title>
 </head>
 
 <body>
-<div layout:fragment="content">
-    <div class="container">
-        <div class="row">
-            <div class="page-header">
+    <div layout:fragment="content">
+        <div class="page-header">
+        </div>
+        <div class="container">
+            <div class="row">
+                <h2>Neuen Account anlegen</h2>
+                <form th:object="${userForm}" id="createForm" action="/registration" method="post" class="form-horizontal">
+                    <div class="form-group" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
+                        <label for="nutzername" class="col-sm-1 control-label">Nutzername</label>
+                        <div class="col-sm-6">
+                            <input name="name" type="text" placeholder="Nutzername" class="form-control"
+                                   id="nutzername">
+                        </div>
+                        <span class="text-danger" th:errors="*{name}"/>
+                    </div>
+                    <div class="form-group" th:classappend="${#fields.hasErrors('password') ? 'has-error' : ''}">
+                        <label for="passwort" class="col-sm-1 control-label">Passwort</label>
+                        <div class="col-sm-6">
+                            <input name="password" type="password" placeholder="Passwort" class="form-control"
+                                   id="passwort">
+                        </div>
+                        <span class="text-danger" th:errors="*{password}"/>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-primary">Registrieren</button>
+                        </div>
+                    </div>
+                </form>
+                <form action="/login">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Anmelden</button>
+                    </div>
+                </form>
             </div>
-            <h2>Neuen Account anlegen</h2>
-            <form th:object="${userForm}" id="createForm" action="/registration" method="post" class="form-horizontal">
-                <div class="form-group" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
-                    <label for="nutzername" class="col-sm-1 control-label">Nutzername</label>
-                    <div class="col-sm-6">
-                        <input name="name" type="text" placeholder="Nutzername" class="form-control"
-                               id="nutzername">
-                    </div>
-                    <span class="text-danger" th:errors="*{name}"/>
-                </div>
-                <div class="form-group" th:classappend="${#fields.hasErrors('password') ? 'has-error' : ''}">
-                    <label for="passwort" class="col-sm-1 control-label">Passwort</label>
-                    <div class="col-sm-6">
-                        <input name="password" type="password" placeholder="Passwort" class="form-control"
-                               id="passwort">
-                    </div>
-                    <span class="text-danger" th:errors="*{password}"/>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-2">
-                        <button type="submit" class="btn btn-primary">Registrieren</button>
-                    </div>
-                </div>
-            </form>
-            <form action="/login">
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success">Anmelden</button>
-                </div>
-            </form>
-            <!--<h2>User</h2>
-            <ul class="list-group">
-                <li th:each="user : ${users}">
-                    <b th:text="${user.name}"></b>
-                </li>
-            </ul>-->
         </div>
     </div>
-</div>
-
-
 </body>
 </html>

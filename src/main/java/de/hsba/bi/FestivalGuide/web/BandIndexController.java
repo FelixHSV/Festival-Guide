@@ -25,7 +25,7 @@ public class BandIndexController {
         this.formAssembler = formAssembler;
     }
 
-    //Auf die Seite bands/index.html verweisen
+    //Auf die Seite bands/index.html verweisen und dort eine Liste aller Bands sowie ein Anlage-Formular bereitstellen
     @GetMapping
     public String index(Model model) {
         model.addAttribute("bands", bandService.getAll());
@@ -33,7 +33,7 @@ public class BandIndexController {
         return "bands/index";
     }
 
-    //Band erstellen auf der Seite bands/index.html
+    //Band erstellen auf der Seite bands/index.html und Weiterleitung auf bands/show.html
     @PostMapping
     @PreAuthorize("authenticated")
     public String create(@ModelAttribute("bandForm") @Valid BandForm bandForm, BindingResult bandBinding) {

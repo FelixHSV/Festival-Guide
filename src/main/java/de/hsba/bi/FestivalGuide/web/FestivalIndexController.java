@@ -26,7 +26,8 @@ public class FestivalIndexController {
         this.formAssembler = formAssembler;
     }
 
-    //Auf die Seite festivals/index.html verweisen
+    //Auf die Seite festivals/index.html verweisen und dort eine Liste aller Festivals
+    //sowie ein Anlage-Formular bereitstellen
     @GetMapping
     public String festivalsIndex(Model model){
         model.addAttribute("festivals",festivalService.getAll());
@@ -34,6 +35,7 @@ public class FestivalIndexController {
         return "festivals/index";
     }
 
+    //Festival erstellen auf der Seite festivals/index.html und Weiterleitung auf festivals/show.html
     @PostMapping
     @PreAuthorize("authenticated")
     public String createFestival(@ModelAttribute("festivalForm") @Valid FestivalForm festivalForm, BindingResult festivalBinding){

@@ -15,18 +15,26 @@ public class FormAssembler {
         FestivalForm form = new FestivalForm();
         form.setName(festival.getName());
         form.setLocation(festival.getLocation());
+        form.setGenre(festival.getGenre());
         form.setDay(festival.getDay());
         form.setMonth(festival.getMonth());
         form.setYear(festival.getYear());
+        form.setEndDay(festival.getEndDay());
+        form.setEndMonth(festival.getEndMonth());
+        form.setEndYear(festival.getEndYear());
         return form;
     }
 
     Festival update (Festival festival, FestivalForm form){
         festival.setName(form.getName());
         festival.setLocation(form.getLocation());
+        festival.setGenre(form.getGenre());
         festival.setDay(form.getDay());
         festival.setMonth(form.getMonth());
         festival.setYear(form.getYear());
+        festival.setEndDay(form.getEndDay());
+        festival.setEndMonth(form.getEndMonth());
+        festival.setEndYear(form.getEndYear());
         return festival;
     }
 

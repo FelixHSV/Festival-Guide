@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 
-    //Verweist auf die Seiter resources/index.html
+    //Verweist auf die Seite index.html
     @GetMapping
     public String index() {
         return "index";
     }
 
-    //Verweist auf die Seiter resources/login.html
+    //Verweist auf die Seite login.html, verhindert den aufruf der seite durch angemeldete User
     @GetMapping("/login")
     public String login() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

@@ -1,6 +1,8 @@
 package de.hsba.bi.FestivalGuide.user;
 
 
+import de.hsba.bi.FestivalGuide.band.Band;
+import de.hsba.bi.FestivalGuide.festival.Festival;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +18,20 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    //Konstruktor
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
+    //Initiale Useranlage (1x Admin, 3x User)
     @PostConstruct
     public void init() {
         if (userRepository.count() == 0) {
-            createUser("admin", "admin", "ADMIN");
+            createUser("Admin", "admin", "ADMIN");
+            createUser("Niklas", "niklas", "USER");
+            createUser("Felix", "felix", "USER");
+            createUser("Malte", "malte", "USER");
         }
     }
 
@@ -43,8 +50,39 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public List<User> findUsers() {
-        return userRepository.findUsers();
+    public User getUser (Long id){
+        return userRepository.getOne(id);
+    }
+
+    //Hinzufügen/Löschen einer Assoziation zwischen User und Band
+    public void addBand (User user, Band band){
+        user.getFavouriteBands().add(band);
+        band.getFavourisedBy().add(user);
+    }
+
+    public void removeBand (User user, Band band){
+        user.getFavouriteBands().remove(band);
+        band.getFavourisedBy().remove(user);
+    }
+
+    //Hinzufügen/Löschen einer Assoziation zwischen User und Festival
+    public void addFestival (User user, Festival festival){
+        user.getFavouriteFestivals().add(festival);
+        festival.getFavourisedBy().add(user);
+    }
+
+    public void removeFestival (User user, Festival festival){
+        user.getFavouriteFestivals().remove(festival);
+        festival.getFavourisedBy().remove(user);
+    }
+
+    //Abrufen von Listen mit Favorisierten Festivals bzw. Bands
+    public List<Festival> getFavouriteFestivals (User user){
+        return (List<Festival>) user.getFavouriteFestivals();
+    }
+
+    public List<Band> getFavouriteBands (User user){
+        return (List<Band>) user.getFavouriteBands();
     }
 }
 

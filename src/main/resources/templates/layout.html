@@ -2,54 +2,58 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Festivalguide</title>
     <link rel="stylesheet" type="text/css"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="/js/jquery-3.3.1.min.js"></script>
     <script src="/js/application.js"></script>
 </head>
 <body>
-
     <nav class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/">
-                <!--<img src="https://emojipedia-us.s3.amazonaws.com/thumbs/160/apple/129/sign-of-the-horns_1f918.png" width="30" height="30" alt="">-->
-            <p>Festival Guide</p>
-            </a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li th:classappend="${module == 'home' ? 'active' : ''}">
-                    <a href="/" th:href="@{/}">Home</a>
-                </li>
-                <li th:classappend="${module == 'home' ? 'active' : ''}">
-                    <a href="/festivals" th:href="@{/festivals}">Festivals</a>
-                </li>
-                <li th:classappend="${module == 'tasks' ? 'active' : ''}">
-                    <a href="/bands" th:href="@{/bands}">Bands</a>
-                </li>
-                <li th:classappend="${module == 'tasks-ld' ? 'active' : ''}">
-                    <a sec:authorize="anonymous" href="#" th:href="@{/login}" >Login</a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li th:classappend="${module == 'tasks-ld' ? 'active' : ''}">
-                    <p class="navbar-btn">
-                        <a sec:authorize="authenticated" href="#" th:href="@{/logout}" class="btn btn-danger btn-md">
-                            <span class="glyphicon glyphicon-off"></span> Logout
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    <p>Festival Guide</p>
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+
+                <!-- linke Seite der Naigationsleiste -->
+                <ul class="nav navbar-nav">
+                    <li th:classappend="${module == 'home' ? 'active' : ''}">
+                        <a href="/" th:href="@{/}">Home</a>
+                    </li>
+                    <li th:classappend="${module == 'home' ? 'active' : ''}">
+                        <a href="/festivals" th:href="@{/festivals}">Festivals</a>
+                    </li>
+                    <li th:classappend="${module == 'tasks' ? 'active' : ''}">
+                        <a href="/bands" th:href="@{/bands}">Bands</a>
+                    </li>
+                    <li th:classappend="${module == 'tasks-ld' ? 'active' : ''}">
+                        <a sec:authorize="authenticated" href="#" th:href="@{/favourites}">Favoriten</a>
+                    </li>
+                    <li th:classappend="${module == 'tasks-ld' ? 'active' : ''}">
+                        <a sec:authorize="anonymous" href="#" th:href="@{/login}">Login</a>
+                    </li>
+                </ul>
+
+                <!-- Rechte Seite der Navigationsleiste -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li sec:authorize="authenticated">
+                        <a href="#">
+                            Hallo, <span th:text="${#httpServletRequest.remoteUser}"/>!
                         </a>
-                    </p>
-                </li>
-            </ul>
+                    </li>
+                    <li th:classappend="${module == 'tasks-ld' ? 'active' : ''}">
+                        <p class="navbar-btn">
+                            <a sec:authorize="authenticated" href="#" th:href="@{/logout}" class="btn btn-danger btn-md">
+                                <span class="glyphicon glyphicon-off"></span> Logout
+                            </a>
+                        </p>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
-
-<div class="mt-5" layout:fragment="content">
-
-
-
-
+    </nav>
+    <div class="mt-5" layout:fragment="content"></div>
 </body>
 </html>

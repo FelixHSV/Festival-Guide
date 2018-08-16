@@ -1,16 +1,18 @@
 package de.hsba.bi.FestivalGuide.user;
 
+import de.hsba.bi.FestivalGuide.band.Band;
+import de.hsba.bi.FestivalGuide.festival.Festival;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 public class User implements Comparable<User> {
 
+    //Statische Methode, die den aktuellen User zurück gibt
     public static User getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof de.hsba.bi.FestivalGuide.user.UserAdapter) {
@@ -31,6 +33,25 @@ public class User implements Comparable<User> {
 
     private String role;
 
+    @ManyToMany(cascade = {
+            CascadeType.MERGE, CascadeType.PERSIST
+    })
+    @JoinTable(name = "USER_BAND",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "band_id") }
+    )
+    private List<Band> favouriteBands;
+
+    @ManyToMany(cascade = {
+            CascadeType.MERGE, CascadeType.PERSIST
+    })
+    @JoinTable(name = "USER_FESTIVAL",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "festival_id") }
+    )
+    private List<Festival> favouriteFestivals;
+
+    //Konstruktoren
     public User() {
     }
 
@@ -44,6 +65,7 @@ public class User implements Comparable<User> {
         this.role = role;
     }
 
+    //Getter und Setter
     public Long getId() {
         return id;
     }
@@ -70,6 +92,20 @@ public class User implements Comparable<User> {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<Band> getFavouriteBands() {
+        if(favouriteBands == null){
+            favouriteBands = new ArrayList<>();
+        }
+        return favouriteBands;
+    }
+
+    public List<Festival> getFavouriteFestivals() {
+        if(favouriteFestivals == null){
+            favouriteFestivals = new ArrayList<>();
+        }
+        return favouriteFestivals;
     }
 
     @Override

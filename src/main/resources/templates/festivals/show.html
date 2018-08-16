@@ -3,77 +3,129 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Festival - Details</title>
+</head>
 <body>
 <div layout:fragment="content">
     <div class="page-header">
     </div>
-
     <div class="container">
+
+        <!-- Name der Band und Favorisierungsformular -->
         <div class="row">
-            <h1 th:text="${festival.name}"></h1>
+            <h2 th:text="${festival.name}" style="float: left;margin-right: 15px"></h2>
+            <form style="float: left; margin-top: 19px" th:if="${!favourized}"
+                  th:action="${'/festivals/' + festival.id + '/addToFavourites/' + user.id}" method="get">
+                <button sec:authorize="authenticated" type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                </button>
+            </form>
+            <form style="float: left; margin-top: 19px" th:if="${favourized}"
+                  th:action="${'/festivals/' + festival.id + '/removeFromFavourites/' + user.id}" method="get">
+                <button sec:authorize="authenticated" type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </button>
+            </form>
         </div>
 
+        <!-- Buttons zum Löschen und Bearbeiten für Admins -->
         <div class="row">
-            <form th:action="${'/festivals/' + festival.id + '/delete'}" method="post" class="form" id="deleteFormFestival">
-                <button type="button" class="btn btn-default" id="changeButtonFestival">Bearbeiten</button>
-                <button type="submit" class="btn btn-danger">Löschen</button>
+            <form th:action="${'/festivals/' + festival.id + '/delete'}" method="post" class="form"
+                  id="deleteFormFestival">
+                <button sec:authorize="hasRole('ADMIN')" type="button" class="btn btn-default"
+                        id="changeButtonFestival">Bearbeiten
+                </button>
+                <button sec:authorize="hasRole('ADMIN')" type="submit" class="btn btn-danger">Löschen</button>
             </form>
             <br>
         </div>
+
+        <!-- Bearbeitungsformular für Admins -->
         <div class="row" id="changeDivFestival">
             <h3>Festival bearbeiten</h3>
-                <form th:action="${'/festivals/' + festival.id}" method="post" id="changeForm" th:object="${festivalForm}" class="">
-                    <div class="form-group" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
-                        <div class="col-sm-6"><label>Name</label></div>
-                        <div class="col-sm-6"><label>Location</label></div>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" id="changeName" name="name" th:field="*{name}" placeholder="Neuer Festivalname"/>
-                        </div>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" id="changeLocation" name="location" th:field="*{location}" placeholder="Neuer Festivalname"/>
-                        </div>
-                        <div class="col-sm-12"><label>Datum</label></div>
-                        <div class="col-sm-1">
-                            <input type="text" class="form-control" id="changeDay" name="day" th:field="*{day}" placeholder="Neuer Festivalname"/>
-                        </div>
-                        <div class="col-sm-1">
-                            <input type="text" class="form-control" id="cangeMonth" name="month" th:field="*{month}" placeholder="Neuer Festivalname"/>
-                        </div>
-                        <div class="col-sm-1">
-                            <input type="text" class="form-control" id="changeYear" name="year" th:field="*{year}" placeholder="Neuer Festivalname"/>
-                        </div>
-                        <div class="col-sm-2">
-                            <button type="submit" class="btn btn-primary">Ändern</button>
-                        </div>
+            <form th:action="${'/festivals/' + festival.id}" method="post" id="changeForm" th:object="${festivalForm}"
+                  class="">
+                <div class="form-group" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
+                    <div class="col-sm-4"><label>Name</label></div>
+                    <div class="col-sm-4"><label>Location</label></div>
+                    <div class="col-sm-4"><label>Stilrichtung</label></div>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="changeName" name="name" th:field="*{name}"/>
                     </div>
-                </form>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="changeLocation" name="location"
+                               th:field="*{location}"/>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="changeGenre" name="genre" th:field="*{genre}"/>
+                    </div>
+                    <div class="col-sm-12"><label>Start-Datum</label></div>
+                    <div class="col-sm-1">
+                        <input type="text" class="form-control" id="changeDay" name="day" th:field="*{day}"/>
+                    </div>
+                    <div class="col-sm-1">
+                        <input type="text" class="form-control" id="cangeMonth" name="month" th:field="*{month}"/>
+                    </div>
+                    <div class="col-sm-1">
+                        <input type="text" class="form-control" id="changeYear" name="year" th:field="*{year}"/>
+                    </div>
+                    <div class="col-sm-12"><label>End-Datum</label></div>
+                    <div class="col-sm-1">
+                        <input type="text" class="form-control" id="changeEndDay" name="endDday" th:field="*{endDay}"/>
+                    </div>
+                    <div class="col-sm-1">
+                        <input type="text" class="form-control" id="cangeEndMonth" name="endMonth"
+                               th:field="*{endMonth}"/>
+                    </div>
+                    <div class="col-sm-1">
+                        <input type="text" class="form-control" id="changeEndYear" name="endYear"
+                               th:field="*{endYear}"/>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-primary">Ändern</button>
+                    </div>
+                </div>
+            </form>
         </div>
 
         <div class="row">
-            <div class="col-sm-6">
-                    <h2 class="display-1">Infos:</h2>
-                    <dl class="row">
-                        <dt class="col-sm-3">Tag:</dt>
-                        <dd class="col-sm-9" th:text="${festival.day}">asdfasdf</dd>
-                        <dt class="col-sm-3">Monat:</dt>
-                        <dd class="col-sm-9" th:text="${festival.month}"></dd>
-                        <dt class="col-sm-3">Jahr:</dt>
-                        <dd class="col-sm-9" th:text="${festival.year}"></dd>
-                        <dt class="col-sm-3">Location:</dt>
-                        <dd class="col-sm-9" th:text="${festival.location}"></dd>
-                    </dl>
-            </div>
-            <div class="col-sm-6">
-                <h2>Künstler:</h2>
-                <table th:if="${!festival.plays.empty}" class="table">
 
-                    <tr th:each="band : ${plays}">
-                        <td th:text="${band.name}"></td>
-                    </tr>
-                </table>
+            <!-- Informationen rund um das Festival -->
+            <div class="col-sm-6">
+                <h2 class="display-1">Infos</h2>
+                <dl class="row">
+                    <dt class="col-sm-2">Von:</dt>
+                    <dd class="col-sm-9" th:text="${startDate}"></dd>
+                    <dt class="col-sm-2">Bis:</dt>
+                    <dd class="col-sm-9" th:text="${endDate}"></dd>
+                    <dt class="col-sm-2">Location:</dt>
+                    <dd class="col-sm-9" th:text="${festival.location}"></dd>
+                    <dt class="col-sm-2">Stilrichtung:</dt>
+                    <dd class="col-sm-9" th:text="${festival.genre}"></dd>
+                </dl>
+            </div>
+
+            <!-- Liste der gebuchten Künstler -->
+            <div class="col-sm-6">
+                <h2>Künstler</h2>
+                <ul class="list-group">
+                    <div th:each="band : ${plays}">
+                        <!-- Admins können per Klick die Assoziation zwischen Festival und Band löschen -->
+                        <a sec:authorize="hasRole('ADMIN')"
+                           th:href="${'/festivals/' + festival.id + '/remove/' + band.id}"
+                           class="list-group-item list-group-item-action" th:text="${band.name}"></a>
+                        <!-- Nicht-Admins werden per Klick auf die Band-Detailseite weitergeleitet -->
+                        <a sec:authorize="!hasRole('ADMIN')" th:href="${'/bands/' + band.id}"
+                           class="list-group-item list-group-item-action" th:text="${band.name}"></a>
+                    </div>
+                </ul>
             </div>
         </div>
-        <div class="row">
+        <div class="row" sec:authorize="hasRole('ADMIN')">
+
+            <!-- Formular zur Banderstellung und gleichzeitigen Zuordnung zum Festival, für Admins -->
             <div class="col-sm-6">
                 <h2>Neue Band erstellen und hinzufügen</h2>
                 <form sec:authorize="authenticated" th:object="${bandForm}" id="createForm"
@@ -91,6 +143,8 @@
                     </div>
                 </form>
             </div>
+
+            <!-- Liste von Bands, die nicht gebucht sind, per Klick jedoch mit dem Festival assoziiert werden - für Admins -->
             <div class="col-sm-6">
                 <h2>Band hinzufügen</h2>
                 <ul class="list-group">
@@ -103,7 +157,5 @@
         </div>
     </div>
 </div>
-
-
 </body>
 </html>

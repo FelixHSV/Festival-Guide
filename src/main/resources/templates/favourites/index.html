@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Favoriten</title>
+</head>
+<body>
+<div class="mt-8" layout:fragment="content">
+    <div class="page-header">
+    </div>
+    <div class="container">
+        <div class="row">
+
+            <!-- Anzeige der favorisierten Festivals -->
+            <div class="col-sm-6">
+                <h2>Festivals</h2>
+                <ul class="list-group">
+                    <div th:each="festival : ${festivals}">
+                        <a th:href="${'/festivals/' + festival.id}" class="list-group-item list-group-item-action"
+                           th:text="${festival.name}"></a>
+                    </div>
+                    <p th:if="${festivals.size() == 0}">Sie haben noch keine Festivals zu ihren Favoriten
+                        hinzugefügt.</p>
+                </ul>
+            </div>
+
+            <!-- Anzeige der favorisierten Bands -->
+            <div class="col-sm-6">
+                <h2>Bands</h2>
+                <ul class="list-group">
+                    <div th:each="band : ${bands}">
+                        <a th:href="${'/bands/' + band.id}" class="list-group-item list-group-item-action"
+                           th:text="${band.name}"></a>
+                    </div>
+                    <p th:if="${bands.size() == 0}">Sie haben noch keine Bands zu ihren Favoriten hinzugefügt.</p>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
