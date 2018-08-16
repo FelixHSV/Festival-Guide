@@ -10,6 +10,7 @@ public class UserAdapter implements UserDetails {
 
     private final User user;
 
+    //Konsturktor
     public UserAdapter(User user) {
         this.user = user;
     }

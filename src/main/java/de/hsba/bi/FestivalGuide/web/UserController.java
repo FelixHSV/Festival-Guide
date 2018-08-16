@@ -23,10 +23,10 @@ public class UserController {
         this.formAssembler = formAssembler;
     }
 
+    //Aufruf der Registrierungsseite und Bereitstellung eines Registrierungsformulares
     @GetMapping("/registration")
     public String registration(Model model){
         model.addAttribute("userForm", new UserForm());
-        model.addAttribute("users", userService.findAll());
         return "registration";
     }
 

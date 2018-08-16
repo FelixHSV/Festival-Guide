@@ -1,30 +1,55 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Band - Details</title>
+</head>
 <body>
 <div layout:fragment="content">
     <div class="page-header">
     </div>
-
     <div class="container">
+
+        <!-- Name der Band und Favorisierungsformular -->
         <div class="row">
-            <h2 th:text="${band.name}"></h2>
+            <h2 th:text="${band.name}" style="float: left;margin-right: 15px"></h2>
+            <form style="float: left; margin-top: 19px" th:if="${!favourized}"
+                  th:action="${'/bands/' + band.id + '/addToFavourites/' + user.id}" method="get">
+                <button sec:authorize="authenticated" type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                </button>
+            </form>
+            <form style="float: left; margin-top: 19px" th:if="${favourized}"
+                  th:action="${'/bands/' + band.id + '/removeFromFavourites/' + user.id}" method="get">
+                <button sec:authorize="authenticated" type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </button>
+            </form>
         </div>
+
+        <!-- Buttons zum Löschen und Bearbeiten für Admins -->
         <div class="row">
-            <form th:action="${'/bands/' + band.id + '/delete'}" method="post" class="form" id="deleteFormBand">
+            <form sec:authorize="hasRole('ADMIN')" th:action="${'/bands/' + band.id + '/delete'}" method="post"
+                  class="form" id="deleteFormBand">
                 <button type="button" class="btn btn-default" id="changeButtonBand">Bearbeiten</button>
                 <button type="submit" class="btn btn-danger">Löschen</button>
             </form>
             <br>
         </div>
+
+        <!-- Bearbeitungsformular für Admins -->
         <div class="row" id="changeDivBand">
             <h3>Band bearbeiten</h3>
-            <form th:action="${'/bands/' + band.id}" method="post" id="changeForm" th:object="${bandForm}">
+            <form sec:authorize="hasRole('ADMIN')" th:action="${'/bands/' + band.id}" method="post" id="changeForm"
+                  th:object="${bandForm}">
                 <div class="form-group">
                     <div class="col-sm-12"><label>Name</label></div>
                     <div class="col-sm-6" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
-                        <input type="text" class="form-control" id="changeName" name="name" th:field="*{name}" placeholder="Neuer Bandname"/>
+                        <input type="text" class="form-control" id="changeName" name="name" th:field="*{name}"
+                               placeholder="Neuer Bandname"/>
                     </div>
                     <div class="col-sm-2">
                         <button type="submit" class="btn btn-primary">Ändern</button>
@@ -32,29 +57,31 @@
                 </div>
             </form>
         </div>
+
+        <!-- Anzeige der Festivals, auf denen die Band gebucht ist -->
         <div class="row col-sm-6">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">Festival</th>
-                        <th scope="col">Location</th>
-                        <th scope="col">Tag</th>
-                        <th scope="col">Monat</th>
-                        <th scope="col">Jahr</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="festival : ${playsAt}">
-                        <td th:text="${festival.name}"></td>
-                        <td th:text="${festival.location}"></td>
-                        <td th:text="${festival.day}"></td>
-                        <td th:text="${festival.month}"></td>
-                        <td th:text="${festival.year}"></td>
-                    </tr>
-                    </tbody>
-                </table>
-        </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Festival</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Stilrichtung</th>
+                    <th scope="col">Von</th>
+                    <th scope="col">Bis</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="festival : ${playsAt}">
+                    <td><a th:href="${'/festivals/' + festival.id}" th:text="${festival.name}"></a></td>
+                    <td th:text="${festival.location}"></td>
+                    <td th:text="${festival.genre}"></td>
+                    <td th:text="${festivalService.startDatum(festival)}"></td>
+                    <td th:text="${festivalService.endDatum(festival)}"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 </body>
 </html>

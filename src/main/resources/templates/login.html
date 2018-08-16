@@ -9,11 +9,10 @@
 
 <body>
 <div layout:fragment="content">
+    <div class="page-header">
+    </div>
     <div class="container">
         <div class="row">
-            <div class="page-header">
-            </div>
-
             <h2>Login</h2>
             <form action="/login" method="post" class="form-horizontal">
                 <div th:if="${param.error}" class="form-group">
@@ -31,13 +30,15 @@
                 <div class="form-group">
                     <label for="inputUsername" class="col-sm-1 control-label">Nutzername</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="inputUsername" name="username" placeholder="Nutzername"/>
+                        <input type="text" class="form-control" id="inputUsername" name="username"
+                               placeholder="Nutzername"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword" class="col-sm-1 control-label">Passwort</label>
                     <div class="col-sm-6">
-                        <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Passwort"/>
+                        <input type="password" class="form-control" id="inputPassword" name="password"
+                               placeholder="Passwort"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -53,8 +54,6 @@
             </form>
         </div>
     </div>
-
-
 </div>
 </body>
 </html>

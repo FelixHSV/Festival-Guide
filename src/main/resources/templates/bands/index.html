@@ -3,49 +3,50 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Bands</title>
+</head>
 <body>
 <div layout:fragment="content">
     <div class="page-header">
-
     </div>
-
     <div class="container">
-        <div class="row-mt-8">
-        </div>
         <div class="row">
+
+            <!-- Liste der aller Bands -->
             <div class="col-sm-6">
                 <h2>Bands</h2>
                 <ul class="list-group">
                     <div th:each="band : ${bands}">
-                        <a th:href="${'/bands/' + band.id}" class="list-group-item list-group-item-action" th:text="${band.name}"></a>
+                        <!-- angemeldete User können alle bands sehen -->
+                        <a sec:authorize="authenticated" th:href="${'/bands/' + band.id}"
+                           class="list-group-item list-group-item-action" th:text="${band.name}"></a>
+                        <!-- Nicht angemeldete User können nur Bans sehen, die gebucht sind -->
+                        <a sec:authorize="anonymous" th:if="${band.playsAt.size() > 0}" th:href="${'/bands/' + band.id}"
+                           class="list-group-item list-group-item-action" th:text="${band.name}"></a>
                     </div>
                 </ul>
             </div>
+
+            <!-- Formular zur Bandanlage, nur für Admins -->
             <div class="col-sm-6">
-                <form sec:authorize="hasRole('ADMIN')" th:object="${bandForm}" id="createForm" action="/bands" method="post">
+                <form sec:authorize="hasRole('ADMIN')" th:object="${bandForm}" id="createForm" action="/bands"
+                      method="post">
                     <h2>Neue Band anlegen</h2>
-                    <div class="form-group" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
+                    <div class="form-group col-sm-12" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
                         <label>Name</label>
                         <input th:field="*{name}" name="name" type="text" placeholder="Name" class="form-control">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-sm-3">
                         <button type="submit" class="btn btn-primary">Band Anlegen</button>
                     </div>
                     <div class="form-group">
                         <span class="text-danger" th:errors="*{name}"/>
                     </div>
                 </form>
-
             </div>
-
         </div>
-
     </div>
-
-
-
-
-
-</div>
 </div>
 </body>

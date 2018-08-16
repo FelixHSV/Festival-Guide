@@ -20,12 +20,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().sameOrigin().and() // allow the h2-console to be used in a frame
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/festivals").permitAll()
-                .antMatchers("/bands").permitAll()
+                .antMatchers("/festivals/**").permitAll()
+                .antMatchers("/bands/**").permitAll()
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/h2-console/**").permitAll() // enable access to the h2-console
                 .antMatchers("/js/**").permitAll() // permit JS resources
-                .antMatchers("/users/**").hasRole("ADMIN")
+                .antMatchers("/favourites").authenticated() // nur angemeldete Nutzer können die Favoritenseite erreichen
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

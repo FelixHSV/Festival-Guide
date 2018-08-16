@@ -1,45 +1,53 @@
 package de.hsba.bi.FestivalGuide.band;
 
 import de.hsba.bi.FestivalGuide.festival.Festival;
+import de.hsba.bi.FestivalGuide.user.User;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 
-//Test Felix
 @Service
 @Transactional
 public class BandService {
 
-    //Test
-
     private final BandRepository repository;
 
+    //Konstruktor
     public BandService(BandRepository repository) {
         this.repository = repository;
     }
 
-    public Band createBand(Band band){return repository.save(band);}
+
+    public Band createBand(Band band){ return repository.save(band); }
 
     public Band getBand (Long id){
         return repository.getOne(id);
     }
 
-    public Band searchBand (Band band) {return band;}
+    public Collection<Band> getAll() { return repository.findAll(); }
+
+    public Band save(Band band) { return repository.save(band); }
 
     public List<Festival> getPlaysAt (Band band){
         return (List<Festival>) band.getPlaysAt();
     }
 
-    public void addFestival(Band band, Festival festival){
-        band.getPlaysAt().add(festival);
-        festival.getPlays().add(band);
+    //Prüfung, ob die Band vom aktuellen User favorisiert ist oder nicht
+    public Boolean favourized(Band band) {
+        return User.getCurrentUser() != null && band.getFavourisedBy().contains(User.getCurrentUser());
     }
 
-    public Collection<Band> getAll() { return repository.findAll();}
-
-    public void delete(Long id){this.repository.deleteById(id);}
-
-    public Band save(Band band) { return repository.save(band); }
+    //Durch die Many-To-Many Beziehungen zu Usern und Festivals (welche jeweils die Eigentümerseite darstellen)
+    //Müssen vor dem löschen der Band die Assoziationen gelöscht werden
+    public void delete(Long id){
+        for (Festival festival : getBand(id).getPlaysAt()) {
+            festival.getPlays().remove(getBand(id));
+        }
+        for (User user : getBand(id).getFavourisedBy()) {
+            user.getFavouriteBands().remove(getBand(id));
+        }
+        this.repository.deleteById(id);
+    }
 }

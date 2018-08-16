@@ -1,14 +1,13 @@
 package de.hsba.bi.FestivalGuide.band;
 
 import de.hsba.bi.FestivalGuide.festival.Festival;
+import de.hsba.bi.FestivalGuide.user.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//Test Felix Nur der HSV
-@Entity(name = "Band")
-@Table(name = "band")
+@Entity
 public class Band {
 
     @Id
@@ -19,16 +18,20 @@ public class Band {
     private String name;
 
     @ManyToMany(mappedBy = "plays")
+    @OrderBy("year ASC, month ASC, day ASC")
     private List<Festival> playsAt;
 
+    @ManyToMany(mappedBy = "favouriteBands")
+    @OrderBy("name ASC")
+    private List<User> favourisedBy;
 
-    //Getter und Setter test
-    public Long getId() {
-        return id;
+    //Default Konstruktor
+    public Band(){
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    //Getter und Setter
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -45,5 +48,13 @@ public class Band {
         }
         return playsAt;
     }
+
+    public List<User> getFavourisedBy() {
+        if (favourisedBy == null) {
+            favourisedBy = new ArrayList<>();
+        }
+        return favourisedBy;
+    }
+
 }
 

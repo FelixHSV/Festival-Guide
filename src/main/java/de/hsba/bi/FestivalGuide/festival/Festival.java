@@ -1,16 +1,13 @@
 package de.hsba.bi.FestivalGuide.festival;
 
-
 import de.hsba.bi.FestivalGuide.band.Band;
+import de.hsba.bi.FestivalGuide.user.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
-//test
-@Entity(name = "Festival")
-@Table(name = "festival")
+@Entity
 public class Festival {
 
     @Id
@@ -24,6 +21,9 @@ public class Festival {
     private String location;
 
     @Basic(optional = false)
+    private String genre;
+
+    @Basic(optional = false)
     private Integer day;
 
     @Basic(optional = false)
@@ -32,28 +32,35 @@ public class Festival {
     @Basic(optional = false)
     private Integer year;
 
+    @Basic(optional = false)
+    private Integer endDay;
+
+    @Basic(optional = false)
+    private Integer endMonth;
+
+    @Basic(optional = false)
+    private Integer endYear;
+
     @ManyToMany(cascade = {
             CascadeType.MERGE, CascadeType.PERSIST
     })
-    @JoinTable(name = "festival_band", // <- Zuordnungstabelle, da N:M-Beziehung
-            joinColumns = @JoinColumn(name = "festival_id"),
-            inverseJoinColumns = @JoinColumn(name = "band_id")
-
+    @JoinTable(name = "FESTIVAL_BAND",
+            joinColumns = { @JoinColumn(name = "festival_id") },
+            inverseJoinColumns = { @JoinColumn(name = "band_id") }
     )
     private List<Band> plays;
 
+    @ManyToMany(mappedBy = "favouriteFestivals")
+    private List<User> favourisedBy;
 
-    @Basic(optional = false)
-    @OneToMany
-    private List<Band> notPlays;
+    //Default Konstruktor
+    public Festival(){
+
+    }
 
     //Getter und Setter
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -70,6 +77,14 @@ public class Festival {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public Integer getDay() {
@@ -96,6 +111,30 @@ public class Festival {
         this.year = year;
     }
 
+    public Integer getEndDay() {
+        return endDay;
+    }
+
+    public void setEndDay(Integer endDay) {
+        this.endDay = endDay;
+    }
+
+    public Integer getEndMonth() {
+        return endMonth;
+    }
+
+    public void setEndMonth(Integer endMonth) {
+        this.endMonth = endMonth;
+    }
+
+    public Integer getEndYear() {
+        return endYear;
+    }
+
+    public void setEndYear(Integer endYear) {
+        this.endYear = endYear;
+    }
+
     public List<Band> getPlays() {
         if(plays == null){
             plays = new ArrayList<>();
@@ -103,12 +142,11 @@ public class Festival {
         return plays;
     }
 
-    public List<Band> getNotPlays(){
-        if(notPlays == null){
-            notPlays = new ArrayList<>();
-
+    public List<User> getFavourisedBy() {
+        if(favourisedBy == null){
+            favourisedBy = new ArrayList<>();
         }
-        return notPlays;
+        return favourisedBy;
     }
 }
 
