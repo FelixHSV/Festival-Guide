@@ -5,6 +5,8 @@ import de.hsba.bi.FestivalGuide.band.BandService;
 import de.hsba.bi.FestivalGuide.festival.FestivalService;
 import de.hsba.bi.FestivalGuide.user.User;
 import de.hsba.bi.FestivalGuide.user.UserService;
+import de.hsba.bi.FestivalGuide.web.exception.NotFoundException;
+import de.hsba.bi.FestivalGuide.web.exception.UnauthorizedException;
 import de.hsba.bi.FestivalGuide.web.form.BandForm;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -63,7 +65,7 @@ public class BandShowController {
 
     //Umsetzung der Änderungen bei Abschicken des Bearbeiten-Formulars
     @PostMapping
-    @PreAuthorize("authenticated")
+    @PreAuthorize("hasRole('ADMIN')")
     public String change (@PathVariable("id") Long id, @ModelAttribute("bandForm")
     @Valid BandForm bandForm, BindingResult bandBinding) {
         if (bandBinding.hasErrors()) {
@@ -75,7 +77,9 @@ public class BandShowController {
 
     //Band zu Favoriten hinzufügen und aus Favoriten entfernen
     @GetMapping("/addToFavourites/{userID}")
+    @PreAuthorize("authenticated")
     public String addToFavourites(@PathVariable("userID") Long userID,@PathVariable("id") Long bandID, String bandname) {
+        if(User.getCurrentUser().getId() != userID){throw new UnauthorizedException();}
         Band band = bandService.getBand(bandID);
         User user = userService.getUser(userID);
         userService.addBand(user, band);
@@ -83,7 +87,9 @@ public class BandShowController {
     }
 
     @GetMapping("/removeFromFavourites/{userID}")
+    @PreAuthorize("authenticated")
     public String removeFromFavourites(@PathVariable("userID") Long userID,@PathVariable("id") Long bandID, String bandname) {
+        if(User.getCurrentUser().getId() != userID){throw new UnauthorizedException();}
         Band band = bandService.getBand(bandID);
         User user = userService.getUser(userID);
         userService.removeBand(user, band);
@@ -92,6 +98,7 @@ public class BandShowController {
 
     //Band löschen
     @PostMapping(path = "/delete")
+    @PreAuthorize("hasRole('ADMIN')")
     public String delete(@PathVariable("id") Long id) {
         bandService.delete(id);
         return "redirect:/bands/";

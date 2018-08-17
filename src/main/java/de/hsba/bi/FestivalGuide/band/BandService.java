@@ -23,7 +23,7 @@ public class BandService {
     public Band createBand(Band band){ return repository.save(band); }
 
     public Band getBand (Long id){
-        return repository.getOne(id);
+        return repository.findById(id).orElse(null);
     }
 
     public Collection<Band> getAll() { return repository.findAll(); }

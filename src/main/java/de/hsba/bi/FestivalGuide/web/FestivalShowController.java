@@ -6,6 +6,8 @@ import de.hsba.bi.FestivalGuide.festival.Festival;
 import de.hsba.bi.FestivalGuide.festival.FestivalService;
 import de.hsba.bi.FestivalGuide.user.User;
 import de.hsba.bi.FestivalGuide.user.UserService;
+import de.hsba.bi.FestivalGuide.web.exception.NotFoundException;
+import de.hsba.bi.FestivalGuide.web.exception.UnauthorizedException;
 import de.hsba.bi.FestivalGuide.web.form.BandForm;
 import de.hsba.bi.FestivalGuide.web.form.FestivalForm;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -68,7 +70,7 @@ public class FestivalShowController {
 
     //Band erstellen und direkt zu Festival hinzufügen
     @PostMapping("/add")
-    @PreAuthorize("authenticated")
+    @PreAuthorize("hasRole('ADMIN')")
     public String addBand(@PathVariable("id") Long id, @ModelAttribute("bandForm") @Valid BandForm bandForm, BindingResult bandBinding){
         if(bandBinding.hasErrors()){
             return "festivals/" + id;
@@ -81,7 +83,7 @@ public class FestivalShowController {
 
     //Daten des Festivals bearbeiten
     @PostMapping
-    @PreAuthorize("authenticated")
+    @PreAuthorize("hasRole('ADMIN')")
     public String change (Model model, @PathVariable("id") Long id, @ModelAttribute("festivalForm")
     @Valid FestivalForm festivalForm, BindingResult festivalBinding) {
         if (festivalBinding.hasErrors()) {
@@ -94,6 +96,7 @@ public class FestivalShowController {
 
     //Hinzufügen/Löschen einer Assoziation zwischen Festival und Band
     @GetMapping("/add/{bandid}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String addExistingBand(@PathVariable("bandid") Long bandid,@PathVariable("id") Long fesid) {
         Festival festival = festivalService.getFestival(fesid);
         Band band = bandService.getBand(bandid);
@@ -102,6 +105,7 @@ public class FestivalShowController {
     }
 
     @GetMapping("/remove/{bandid}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String removeBand(@PathVariable("bandid") Long bandid,@PathVariable("id") Long fesid) {
         Festival festival = festivalService.getFestival(fesid);
         Band band = bandService.getBand(bandid);
@@ -111,7 +115,9 @@ public class FestivalShowController {
 
     //Festival zu Favoriten hinzufügen und aus Favoriten entfernen
     @GetMapping("/addToFavourites/{userID}")
+    @PreAuthorize("authenticated")
     public String addToFavourites(@PathVariable("userID") Long userID,@PathVariable("id") Long festID) {
+        if(User.getCurrentUser().getId() != userID){throw new UnauthorizedException();}
         Festival festival = festivalService.getFestival(festID);
         User user = userService.getUser(userID);
         userService.addFestival(user, festival);
@@ -119,7 +125,9 @@ public class FestivalShowController {
     }
 
     @GetMapping("/removeFromFavourites/{userID}")
+    @PreAuthorize("authenticated")
     public String removeFromFavourites(@PathVariable("userID") Long userID,@PathVariable("id") Long festID) {
+        if(User.getCurrentUser().getId() != userID){throw new UnauthorizedException();}
         Festival festival = festivalService.getFestival(festID);
         User user = userService.getUser(userID);
         userService.removeFestival(user, festival);
@@ -128,6 +136,7 @@ public class FestivalShowController {
 
     //Festival löschen
     @PostMapping(path = "/delete")
+    @PreAuthorize("hasRole('ADMIN')")
     public String delete(@PathVariable("id") Long id) {
         festivalService.delete(id);
         return "redirect:/festivals/";
