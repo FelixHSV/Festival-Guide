@@ -23,9 +23,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/festivals/**").permitAll()
                 .antMatchers("/bands/**").permitAll()
                 .antMatchers("/registration").permitAll()
+                .antMatchers("/favourites").authenticated() // nur angemeldete Nutzer können die Favoritenseite erreichen
                 .antMatchers("/h2-console/**").permitAll() // enable access to the h2-console
                 .antMatchers("/js/**").permitAll() // permit JS resources
-                .antMatchers("/favourites").authenticated() // nur angemeldete Nutzer können die Favoritenseite erreichen
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
