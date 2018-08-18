@@ -21,8 +21,7 @@ public class IndexController {
 
     //Verweist auf die Seite login.html, verhindert den aufruf der seite durch angemeldete User
     @GetMapping("/login")
-    public String login(Model model) {
-        model.addAttribute("userForm", new UserForm());
+    public String login() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth instanceof AnonymousAuthenticationToken ? "/login" : "redirect:/";
     }
