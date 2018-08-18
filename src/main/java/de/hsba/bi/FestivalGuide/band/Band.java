@@ -22,7 +22,6 @@ public class Band {
     private List<Festival> playsAt;
 
     @ManyToMany(mappedBy = "favouriteBands")
-    @OrderBy("name ASC")
     private List<User> favourisedBy;
 
     //Default Konstruktor

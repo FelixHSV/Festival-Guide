@@ -1,15 +1,14 @@
 package de.hsba.bi.FestivalGuide.festival;
 
 import de.hsba.bi.FestivalGuide.band.Band;
+import de.hsba.bi.FestivalGuide.band.BandNameComparator;
 import de.hsba.bi.FestivalGuide.band.BandService;
 import de.hsba.bi.FestivalGuide.user.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLTransactionRollbackException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -39,8 +38,10 @@ public class FestivalService {
         return (List<Band>) festival.getPlays();
     }
 
-    public Collection<Festival> getAll() {
-        return repository.findAll();
+    public List<Festival> getAll() {
+        List<Festival> allFestivals = repository.findAll();
+        Collections.sort(allFestivals, new FestivalNameComparator());
+        return allFestivals;
     }
 
     //Bands, die nicht auf dem Festival auftreten
@@ -48,6 +49,7 @@ public class FestivalService {
         List<Band> notPlays = new ArrayList<>();
         notPlays.addAll(bandService.getAll());
         notPlays.removeAll(festival.getPlays());
+        Collections.sort(notPlays, new BandNameComparator());
         return notPlays;
     }
 

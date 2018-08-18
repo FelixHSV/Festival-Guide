@@ -47,41 +47,50 @@
             <h3>Festival bearbeiten</h3>
             <form th:action="${'/festivals/' + festival.id}" method="post" id="changeForm" th:object="${festivalForm}"
                   class="">
-                <div class="form-group" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
+                <div class="form-group">
                     <div class="col-sm-4"><label>Name</label></div>
                     <div class="col-sm-4"><label>Location</label></div>
                     <div class="col-sm-4"><label>Stilrichtung</label></div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 form-group" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
                         <input type="text" class="form-control" id="changeName" name="name" th:field="*{name}"/>
+                        <span class="text-danger" th:errors="*{name}"/>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 form-group" th:classappend="${#fields.hasErrors('location') ? 'has-error' : ''}">
                         <input type="text" class="form-control" id="changeLocation" name="location"
                                th:field="*{location}"/>
+                        <span class="text-danger" th:errors="*{location}"/>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 form-group" th:classappend="${#fields.hasErrors('genre') ? 'has-error' : ''}">
                         <input type="text" class="form-control" id="changeGenre" name="genre" th:field="*{genre}"/>
+                        <span class="text-danger" th:errors="*{genre}"/>
                     </div>
                     <div class="col-sm-12"><label>Start-Datum</label></div>
-                    <div class="col-sm-1">
+                    <div class="col-sm-1 form-group" th:classappend="${#fields.hasErrors('day') ? 'has-error' : ''}">
                         <input type="text" class="form-control" id="changeDay" name="day" th:field="*{day}"/>
+                        <span class="text-danger" th:errors="*{day}"/>
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-sm-1 form-group" th:classappend="${#fields.hasErrors('month') ? 'has-error' : ''}">
                         <input type="text" class="form-control" id="cangeMonth" name="month" th:field="*{month}"/>
+                        <span class="text-danger" th:errors="*{month}"/>
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-sm-1 form-group" th:classappend="${#fields.hasErrors('year') ? 'has-error' : ''}">
                         <input type="text" class="form-control" id="changeYear" name="year" th:field="*{year}"/>
+                        <span class="text-danger" th:errors="*{year}"/>
                     </div>
                     <div class="col-sm-12"><label>End-Datum</label></div>
-                    <div class="col-sm-1">
-                        <input type="text" class="form-control" id="changeEndDay" name="endDday" th:field="*{endDay}"/>
+                    <div class="col-sm-1 form-group" th:classappend="${#fields.hasErrors('endDay') ? 'has-error' : ''}">
+                        <input type="text" class="form-control" id="changeEndDay" name="endDay" th:field="*{endDay}"/>
+                        <span class="text-danger" th:errors="*{endDay}"/>
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-sm-1 form-group" th:classappend="${#fields.hasErrors('endMonth') ? 'has-error' : ''}">
                         <input type="text" class="form-control" id="cangeEndMonth" name="endMonth"
                                th:field="*{endMonth}"/>
+                        <span class="text-danger" th:errors="*{endMonth}"/>
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-sm-1 form-group" th:classappend="${#fields.hasErrors('endYear') ? 'has-error' : ''}">
                         <input type="text" class="form-control" id="changeEndYear" name="endYear"
                                th:field="*{endYear}"/>
+                        <span class="text-danger" th:errors="*{endYear}"/>
                     </div>
                     <div class="col-sm-2">
                         <button type="submit" class="btn btn-primary">Ändern</button>

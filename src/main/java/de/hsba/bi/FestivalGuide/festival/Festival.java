@@ -48,6 +48,7 @@ public class Festival {
             joinColumns = { @JoinColumn(name = "festival_id") },
             inverseJoinColumns = { @JoinColumn(name = "band_id") }
     )
+    @OrderBy("name ASC")
     private List<Band> plays;
 
     @ManyToMany(mappedBy = "favouriteFestivals")

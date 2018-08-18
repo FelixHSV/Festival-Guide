@@ -66,9 +66,12 @@ public class BandShowController {
     //Umsetzung der Änderungen bei Abschicken des Bearbeiten-Formulars
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public String change (@PathVariable("id") Long id, @ModelAttribute("bandForm")
+    public String change (Model model, @PathVariable("id") Long id, @ModelAttribute("bandForm")
     @Valid BandForm bandForm, BindingResult bandBinding) {
         if (bandBinding.hasErrors()) {
+            model.addAttribute("playsAt", bandService.getPlaysAt(bandService.getBand(id)));
+            model.addAttribute("favourized", bandService.favourized(bandService.getBand(id)));
+            model.addAttribute("festivalService", festivalService);
             return "bands/show";
         }
         bandService.save(formAssembler.update(getBand(id), bandForm));

@@ -35,64 +35,53 @@
                     <div class="form-group col-sm-12" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
                         <label>Name</label>
                         <input name="name" type="text" placeholder="Name" class="form-control">
+                        <span class="text-danger" th:errors="*{name}"/>
                     </div>
                     <div class="form-group col-sm-12"
                          th:classappend="${#fields.hasErrors('location') ? 'has-error' : ''}">
                         <label>Location</label>
                         <input name="location" type="text" placeholder="Location" class="form-control">
+                        <span class="text-danger" th:errors="*{location}"/>
                     </div>
                     <div class="form-group col-sm-12" th:classappend="${#fields.hasErrors('genre') ? 'has-error' : ''}">
                         <label>Stilrichtung</label>
                         <input name="genre" type="text" placeholder="Stilrichtung" class="form-control">
+                        <span class="text-danger" th:errors="*{genre}"/>
                     </div>
                     <div class="col-sm-12"><label>Start-Datum</label></div>
                     <div class="form-group col-sm-4" th:classappend="${#fields.hasErrors('day') ? 'has-error' : ''}">
                         <input name="day" type="number" placeholder="Tag" min="1" step="1" max="31"
                                class="form-control">
+                        <span class="text-danger" th:errors="*{day}"/>
                     </div>
                     <div class="form-group col-sm-4" th:classappend="${#fields.hasErrors('month') ? 'has-error' : ''}">
                         <input name="month" placeholder="Monat" type="number" min="1" step="1" max="12"
                                class="form-control">
+                        <span class="text-danger" th:errors="*{month}"/>
                     </div>
                     <div class="form-group col-sm-4" th:classappend="${#fields.hasErrors('year') ? 'has-error' : ''}">
                         <input name="year" placeholder="Jahr" type="number" min="2018" step="1" class="form-control">
+                        <span class="text-danger" th:errors="*{year}"/>
                     </div>
                     <div class="col-sm-12"><label>Ende-Datum</label></div>
                     <div class="form-group col-sm-4" th:classappend="${#fields.hasErrors('endDay') ? 'has-error' : ''}">
                         <input name="endDay" type="number" placeholder="Tag" min="1" step="1" max="31"
                                class="form-control">
+                        <span class="text-danger" th:errors="*{endDay}"/>
                     </div>
                     <div class="form-group col-sm-4"
                          th:classappend="${#fields.hasErrors('endMonth') ? 'has-error' : ''}">
                         <input name="endMonth" placeholder="Monat" type="number" min="1" step="1" max="12"
                                class="form-control">
+                        <span class="text-danger" th:errors="*{endMonth}"/>
                     </div>
                     <div class="form-group col-sm-4"
                          th:classappend="${#fields.hasErrors('endYear') ? 'has-error' : ''}">
                         <input name="endYear" placeholder="Jahr" type="number" min="2018" step="1" class="form-control">
+                        <span class="text-danger" th:errors="*{endYear}"/>
                     </div>
                     <div class="form-group col-sm-3">
                         <button type="submit" class="btn btn-primary">Festival Anlegen</button>
-                    </div>
-                    <div class="form-group">
-                        <span class="text-danger" th:errors="*{name}"/>
-                        <p>
-                            <span class="text-danger" th:errors="*{location}"/>
-                        <p>
-                            <span class="text-danger" th:errors="*{genre}"/>
-                        <p>
-                            <span class="text-danger" th:errors="*{day}"/>
-                        <p>
-                            <span class="text-danger" th:errors="*{month}"/>
-                        <p>
-                            <span class="text-danger" th:errors="*{year}"/>
-                        <p>
-                            <span class="text-danger" th:errors="*{endDay}"/>
-                        <p>
-                            <span class="text-danger" th:errors="*{endMonth}"/>
-                        <p>
-                            <span class="text-danger" th:errors="*{endYear}"/>
-                        <p>
                     </div>
                 </form>
             </div>
