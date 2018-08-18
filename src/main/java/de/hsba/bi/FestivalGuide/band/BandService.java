@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -26,7 +27,11 @@ public class BandService {
         return repository.findById(id).orElse(null);
     }
 
-    public Collection<Band> getAll() { return repository.findAll(); }
+    public List<Band> getAll() {
+        List<Band> allBands = repository.findAll();
+        Collections.sort(allBands, new BandNameComparator());
+        return allBands;
+    }
 
     public Band save(Band band) { return repository.save(band); }
 

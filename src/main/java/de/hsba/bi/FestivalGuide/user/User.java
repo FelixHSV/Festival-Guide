@@ -40,6 +40,7 @@ public class User implements Comparable<User> {
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "band_id") }
     )
+    @OrderBy("name ASC")
     private List<Band> favouriteBands;
 
     @ManyToMany(cascade = {
@@ -49,6 +50,7 @@ public class User implements Comparable<User> {
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "festival_id") }
     )
+    @OrderBy("name ASC")
     private List<Festival> favouriteFestivals;
 
     //Konstruktoren

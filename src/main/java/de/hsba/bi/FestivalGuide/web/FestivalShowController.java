@@ -88,6 +88,11 @@ public class FestivalShowController {
     @Valid FestivalForm festivalForm, BindingResult festivalBinding) {
         if (festivalBinding.hasErrors()) {
             model.addAttribute("bandForm", new BandForm());
+            model.addAttribute("plays", festivalService.getPlays(festivalService.getFestival(id)));
+            model.addAttribute("playsNot",festivalService.getNotPlays(festivalService.getFestival(id), bandService));
+            model.addAttribute("startDate",  festivalService.startDatum(festivalService.getFestival(id)));
+            model.addAttribute("endDate",  festivalService.endDatum(festivalService.getFestival(id)));
+            model.addAttribute("favourized", festivalService.favourized(festivalService.getFestival(id)));
             return "festivals/show";
         }
         festivalService.save(formAssembler.update(getFestival(id), festivalForm));

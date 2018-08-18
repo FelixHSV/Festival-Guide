@@ -38,8 +38,9 @@ public class FestivalIndexController {
     //Festival erstellen auf der Seite festivals/index.html und Weiterleitung auf festivals/show.html
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public String createFestival(@ModelAttribute("festivalForm") @Valid FestivalForm festivalForm, BindingResult festivalBinding){
+    public String createFestival(Model model, @ModelAttribute("festivalForm") @Valid FestivalForm festivalForm, BindingResult festivalBinding){
         if(festivalBinding.hasErrors()){
+            model.addAttribute("festivals",festivalService.getAll());
             return "festivals/index";
         }
         Festival festival = festivalService.createFestival(formAssembler.update(new Festival(),festivalForm));

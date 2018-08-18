@@ -36,8 +36,9 @@ public class BandIndexController {
     //Band erstellen auf der Seite bands/index.html und Weiterleitung auf bands/show.html
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public String create(@ModelAttribute("bandForm") @Valid BandForm bandForm, BindingResult bandBinding) {
+    public String create(Model model, @ModelAttribute("bandForm") @Valid BandForm bandForm, BindingResult bandBinding) {
         if (bandBinding.hasErrors()) {
+            model.addAttribute("bands", bandService.getAll());
             return "bands/index";
         }
         Band band = bandService.createBand(formAssembler.update(new Band(), bandForm));

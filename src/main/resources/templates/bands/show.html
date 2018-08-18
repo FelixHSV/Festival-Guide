@@ -47,9 +47,10 @@
                   th:object="${bandForm}">
                 <div class="form-group">
                     <div class="col-sm-12"><label>Name</label></div>
-                    <div class="col-sm-6" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
+                    <div class="col-sm-6 form-group" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
                         <input type="text" class="form-control" id="changeName" name="name" th:field="*{name}"
                                placeholder="Neuer Bandname"/>
+                        <span class="text-danger" th:errors="*{name}"/>
                     </div>
                     <div class="col-sm-2">
                         <button type="submit" class="btn btn-primary">Ändern</button>
