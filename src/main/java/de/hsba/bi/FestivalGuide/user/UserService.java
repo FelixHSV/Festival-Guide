@@ -54,6 +54,17 @@ public class UserService {
         return userRepository.getOne(id);
     }
 
+    //Check des Usernames für Registrierung
+    public boolean checkUsername (String name) {
+        List<User> users = this.findAll();
+        for (User user: users) {
+            if (user.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     //Hinzufügen/Löschen einer Assoziation zwischen User und Band
     public void addBand (User user, Band band){
         user.getFavouriteBands().add(band);

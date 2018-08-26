@@ -14,6 +14,7 @@
         <div class="container">
             <div class="row">
                 <h2>Neuen Account anlegen</h2>
+                <div style="color:Tomato" th:text= "${usernameExists}"> </div>
                 <form th:object="${userForm}" id="createForm" action="/registration" method="post" class="form-horizontal">
                     <div class="form-group" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
                         <label for="nutzername" class="col-sm-1 control-label">Nutzername</label>

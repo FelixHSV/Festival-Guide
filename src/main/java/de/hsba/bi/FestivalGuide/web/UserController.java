@@ -32,11 +32,16 @@ public class UserController {
 
     //Neuen User erstellen
     @PostMapping("/registration")
-    public String createUser(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult userBinding){
-        if(userBinding.hasErrors()){
+    public String createUser(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult userBinding, Model model) {
+        if (userBinding.hasErrors()) {
             return "registration";
         }
-        User user = userService.createUser(formAssembler.update(new User(),userForm));
-        return "redirect:/";
+        if (userService.checkUsername(userForm.getName())) {
+            model.addAttribute("usernameExists","Der gewählte Username existiert bereits!");
+            return "registration";
+        } else {
+            userService.createUser(formAssembler.update(new User(), userForm));
+            return "redirect:/";
+        }
     }
 }
