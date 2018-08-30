@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+
 @Controller
 @RequestMapping("/festivals/{id}")
 public class FestivalShowController {
@@ -146,4 +147,5 @@ public class FestivalShowController {
         festivalService.delete(id);
         return "redirect:/festivals/";
     }
+
 }

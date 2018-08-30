@@ -22,7 +22,7 @@
                         <!-- angemeldete User können alle bands sehen -->
                         <a sec:authorize="authenticated" th:href="${'/bands/' + band.id}"
                            class="list-group-item list-group-item-action" th:text="${band.name}"></a>
-                        <!-- Nicht angemeldete User können nur Bans sehen, die gebucht sind -->
+                        <!-- Nicht angemeldete User können nur Bands sehen, die gebucht sind -->
                         <a sec:authorize="anonymous" th:if="${band.playsAt.size() > 0}" th:href="${'/bands/' + band.id}"
                            class="list-group-item list-group-item-action" th:text="${band.name}"></a>
                     </div>

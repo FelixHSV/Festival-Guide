@@ -2,8 +2,10 @@ package de.hsba.bi.FestivalGuide.web;
 
 import de.hsba.bi.FestivalGuide.band.Band;
 import de.hsba.bi.FestivalGuide.festival.Festival;
+import de.hsba.bi.FestivalGuide.filter.Filter;
 import de.hsba.bi.FestivalGuide.user.User;
 import de.hsba.bi.FestivalGuide.web.form.BandForm;
+import de.hsba.bi.FestivalGuide.web.form.DateFilterForm;
 import de.hsba.bi.FestivalGuide.web.form.FestivalForm;
 import de.hsba.bi.FestivalGuide.web.form.UserForm;
 import org.springframework.stereotype.Component;
@@ -54,4 +56,11 @@ public class FormAssembler {
         user.setPassword(form.getPassword());
         return user;
     }
+
+    Filter update (Filter filter, DateFilterForm form) {
+        filter.setMonth(form.getMonth());
+        filter.setYear(form.getYear());
+        return filter;
+    }
+
 }
