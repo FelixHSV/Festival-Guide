@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Festivals</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="page-header">
+    </div>
+    <div class="container">
+        <div class="row">
+
+            <!-- Liste aller gefilterten Festivals -->
+            <div class="col-sm-6">
+                <h2>Festivals</h2>
+                <ul class="list-group">
+                    <div th:each="festival : ${filteredFestivals}">
+                        <a th:href="${'/festivals/' + festival.id}" class="list-group-item list-group-item-action"
+                           th:text="${festival.name}"></a>
+                    </div>
+                </ul>
+            </div>
+            </div>
+        <form action="/festivals">
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Alle Festivals zeigen</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

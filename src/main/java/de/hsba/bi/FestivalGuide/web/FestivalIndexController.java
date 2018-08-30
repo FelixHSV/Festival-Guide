@@ -2,6 +2,7 @@ package de.hsba.bi.FestivalGuide.web;
 
 import de.hsba.bi.FestivalGuide.festival.Festival;
 import de.hsba.bi.FestivalGuide.festival.FestivalService;
+import de.hsba.bi.FestivalGuide.web.form.DateFilterForm;
 import de.hsba.bi.FestivalGuide.web.form.FestivalForm;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,7 @@ public class FestivalIndexController {
     @GetMapping
     public String festivalsIndex(Model model){
         model.addAttribute("festivals",festivalService.getAll());
+        model.addAttribute("dateFilterForm", new DateFilterForm());
         model.addAttribute("festivalForm", new FestivalForm());
         return "festivals/index";
     }

@@ -21,6 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/festivals/**").permitAll()
+                .antMatchers("/filter").permitAll()
                 .antMatchers("/bands/**").permitAll()
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/favourites").authenticated() // nur angemeldete Nutzer können die Favoritenseite erreichen
