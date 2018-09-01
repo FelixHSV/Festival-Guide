@@ -85,6 +85,28 @@
                     </div>
                 </form>
             </div>
+            
+            <!-- Formular zum Filtern -->
+            <div class="col-sm-6">
+                <form sec:authorize="authenticated" th:object="${dateFilterForm}" id="searchForm" action="/filter"
+                      method="post">
+                    <h2>Festivals nach Datum filtern</h2>
+                    <div class="form-group col-sm-12" th:classappend="${#fields.hasErrors('month') ? 'has-error' : ''}">
+                        <label>Monat</label>
+                        <input th:field="*{month}" name="month" type="number" placeholder="Monat" class="form-control">
+                        <span class="text-danger" th:errors="*{month}"/>
+                    </div>
+                    <div class="form-group col-sm-12" th:classappend="${#fields.hasErrors('year') ? 'has-error' : ''}">
+                        <label>Jahr</label>
+                        <input th:field="*{year}" name="year" type="number" placeholder="Jahr" class="form-control">
+                        <span class="text-danger" th:errors="*{year}"/>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <button type="submit" class="btn btn-primary">Filtern</button>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
 </div>
