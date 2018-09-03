@@ -72,9 +72,15 @@ public class FestivalShowController {
     //Band erstellen und direkt zu Festival hinzufügen
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
-    public String addBand(@PathVariable("id") Long id, @ModelAttribute("bandForm") @Valid BandForm bandForm, BindingResult bandBinding){
+    public String addBand(@PathVariable("id") Long id, @ModelAttribute("bandForm") @Valid BandForm bandForm, BindingResult bandBinding, Model model){
         if(bandBinding.hasErrors()){
-            return "festivals/" + id;
+            model.addAttribute("plays", festivalService.getPlays(festivalService.getFestival(id)));
+            model.addAttribute("playsNot",festivalService.getNotPlays(festivalService.getFestival(id), bandService));
+            model.addAttribute("festivalForm", formAssembler.toForm(getFestival(id)));
+            model.addAttribute("startDate",  festivalService.startDatum(festivalService.getFestival(id)));
+            model.addAttribute("endDate",  festivalService.endDatum(festivalService.getFestival(id)));
+            model.addAttribute("favourized", festivalService.favourized(festivalService.getFestival(id)));
+            return "festivals/show";
         }
         Band band = bandService.createBand(formAssembler.update(new Band(), bandForm));
         Festival festival = festivalService.getFestival(id);

@@ -43,6 +43,7 @@ public class FestivalIndexController {
     public String createFestival(Model model, @ModelAttribute("festivalForm") @Valid FestivalForm festivalForm, BindingResult festivalBinding){
         if(festivalBinding.hasErrors()){
             model.addAttribute("festivals",festivalService.getAll());
+            model.addAttribute("dateFilterForm", new DateFilterForm());
             return "festivals/index";
         }
         Festival festival = festivalService.createFestival(formAssembler.update(new Festival(),festivalForm));

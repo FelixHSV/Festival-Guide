@@ -143,12 +143,10 @@
                         <label>Name</label>
                         <input th:field="*{name}" name="name" type="text" placeholder="Enter Name here"
                                class="form-control">
+                        <span class="text-danger" th:errors="*{name}"/>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Band Anlegen</button>
-                    </div>
-                    <div class="form-group">
-                        <span class="text-danger" th:errors="*{name}"/>
                     </div>
                 </form>
             </div>
