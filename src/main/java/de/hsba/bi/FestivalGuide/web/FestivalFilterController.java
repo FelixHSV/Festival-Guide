@@ -8,6 +8,7 @@ import de.hsba.bi.FestivalGuide.filter.Filter;
 import de.hsba.bi.FestivalGuide.user.User;
 import de.hsba.bi.FestivalGuide.user.UserService;
 import de.hsba.bi.FestivalGuide.web.form.DateFilterForm;
+import de.hsba.bi.FestivalGuide.web.form.FestivalForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,6 +55,8 @@ public class FestivalFilterController {
     public String datefilter(Model model, @ModelAttribute("dateFilterForm") @Valid DateFilterForm dateFilterForm, BindingResult dateFilterBinding) {
         if(dateFilterBinding.hasErrors()){
             model.addAttribute("festivals",festivalService.getAll());
+            model.addAttribute("dateFilterForm", new DateFilterForm());
+            model.addAttribute("festivalForm", new FestivalForm());
             return "festivals/index";
         }
         Filter filter = formAssembler.update(new Filter(), dateFilterForm);
