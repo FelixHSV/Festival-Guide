@@ -4,6 +4,7 @@ import de.hsba.bi.FestivalGuide.festival.Festival;
 import de.hsba.bi.FestivalGuide.festival.FestivalService;
 import de.hsba.bi.FestivalGuide.web.form.DateFilterForm;
 import de.hsba.bi.FestivalGuide.web.form.FestivalForm;
+import de.hsba.bi.FestivalGuide.web.form.GenreFilterForm;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,7 @@ public class FestivalIndexController {
         model.addAttribute("festivals",festivalService.getAll());
         model.addAttribute("dateFilterForm", new DateFilterForm());
         model.addAttribute("festivalForm", new FestivalForm());
+        model.addAttribute("genreFilterForm", new GenreFilterForm());
         return "festivals/index";
     }
 
@@ -44,6 +46,7 @@ public class FestivalIndexController {
         if(festivalBinding.hasErrors()){
             model.addAttribute("festivals",festivalService.getAll());
             model.addAttribute("dateFilterForm", new DateFilterForm());
+            model.addAttribute("genreFilterForm", new GenreFilterForm());
             return "festivals/index";
         }
         Festival festival = festivalService.createFestival(formAssembler.update(new Festival(),festivalForm));

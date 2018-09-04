@@ -3,11 +3,9 @@ package de.hsba.bi.FestivalGuide.web;
 import de.hsba.bi.FestivalGuide.band.Band;
 import de.hsba.bi.FestivalGuide.festival.Festival;
 import de.hsba.bi.FestivalGuide.filter.Filter;
+import de.hsba.bi.FestivalGuide.filter.GenreFilter;
 import de.hsba.bi.FestivalGuide.user.User;
-import de.hsba.bi.FestivalGuide.web.form.BandForm;
-import de.hsba.bi.FestivalGuide.web.form.DateFilterForm;
-import de.hsba.bi.FestivalGuide.web.form.FestivalForm;
-import de.hsba.bi.FestivalGuide.web.form.UserForm;
+import de.hsba.bi.FestivalGuide.web.form.*;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -61,6 +59,11 @@ public class FormAssembler {
         filter.setMonth(form.getMonth());
         filter.setYear(form.getYear());
         return filter;
+    }
+
+    GenreFilter update (GenreFilter genreFilter, GenreFilterForm form) {
+        genreFilter.setGenre(form.getGenre());
+        return genreFilter;
     }
 
 }
