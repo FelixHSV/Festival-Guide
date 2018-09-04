@@ -21,6 +21,7 @@
                         <a th:href="${'/festivals/' + festival.id}" class="list-group-item list-group-item-action"
                            th:text="${festival.name}"></a>
                     </div>
+                    <p th:if="${filteredFestivals.size() == 0}"> Leider passt keines unserer Festivals zu deiner Auswahl.</p>
                 </ul>
             </div>
             </div>

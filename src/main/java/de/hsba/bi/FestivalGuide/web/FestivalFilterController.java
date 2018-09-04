@@ -5,10 +5,13 @@ import de.hsba.bi.FestivalGuide.band.BandService;
 import de.hsba.bi.FestivalGuide.festival.Festival;
 import de.hsba.bi.FestivalGuide.festival.FestivalService;
 import de.hsba.bi.FestivalGuide.filter.Filter;
+import de.hsba.bi.FestivalGuide.filter.GenreFilter;
 import de.hsba.bi.FestivalGuide.user.User;
 import de.hsba.bi.FestivalGuide.user.UserService;
 import de.hsba.bi.FestivalGuide.web.form.DateFilterForm;
 import de.hsba.bi.FestivalGuide.web.form.FestivalForm;
+import de.hsba.bi.FestivalGuide.web.form.GenreFilterForm;
+import org.omg.CORBA.DATA_CONVERSION;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -51,12 +55,12 @@ public class FestivalFilterController {
     }
 
     //DateFilter anwenden
-    @PostMapping
+    @PostMapping ("/date")
     public String datefilter(Model model, @ModelAttribute("dateFilterForm") @Valid DateFilterForm dateFilterForm, BindingResult dateFilterBinding) {
         if(dateFilterBinding.hasErrors()){
             model.addAttribute("festivals",festivalService.getAll());
-            model.addAttribute("dateFilterForm", new DateFilterForm());
             model.addAttribute("festivalForm", new FestivalForm());
+            model.addAttribute("genreFilterForm", new GenreFilterForm());
             return "festivals/index";
         }
         Filter filter = formAssembler.update(new Filter(), dateFilterForm);
@@ -70,6 +74,28 @@ public class FestivalFilterController {
         model.addAttribute("filteredFestivals", filteredFestivals);
         return "festivals/showFiltered";
     }
+
+    //GenreFilter anwenden
+    @PostMapping ("/genre")
+    public String genrefilter(Model model, @ModelAttribute("genreFilterForm") @Valid GenreFilterForm genreFilterForm, BindingResult dateFilterBinding) {
+        if(dateFilterBinding.hasErrors()){
+            model.addAttribute("festivals",festivalService.getAll());
+            model.addAttribute("festivalForm", new FestivalForm());
+            model.addAttribute("dateFilterForm", new DateFilterForm());
+            return "festivals/index";
+        }
+        GenreFilter genreFilter = formAssembler.update(new GenreFilter(), genreFilterForm);
+        List<Festival> allFestivals = festivalService.getAll();
+        List<Festival> filteredFestivals = new ArrayList<>();
+        for (Festival festival: allFestivals) {
+            if ((festival.getGenre().equals(genreFilter.getGenre()))) {
+                filteredFestivals.add(festival);
+            }
+        }
+        model.addAttribute("filteredFestivals", filteredFestivals);
+        return "festivals/showFiltered";
+    }
+
 
 }
 
