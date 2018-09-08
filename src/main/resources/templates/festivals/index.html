@@ -27,7 +27,7 @@
 
             <!-- Formular zum Filtern nach Datum -->
             <div class="col-sm-6">
-                <form sec:authorize="authenticated" th:object="${dateFilterForm}" id="searchForm" action="/filter/date"
+                <form th:object="${dateFilterForm}" action="/filter/date"
                       method="post">
                     <h2>Festivals nach Datum filtern</h2>
                     <div class="form-group col-sm-12" th:classappend="${#fields.hasErrors('month') ? 'has-error' : ''}">
@@ -48,17 +48,18 @@
 
             <!-- Formular zum Filtern nach Genre -->
             <div class="col-sm-6">
-                <form sec:authorize="authenticated" th:object="${genreFilterForm}" id="searchForm" action="/filter/genre"
+                <form th:object="${genreFilterForm}" action="/filter/genre"
                       method="post">
                     <h2>Festivals nach Genre filtern</h2>
                     <div class="form-group col-sm-12" th:classappend="${#fields.hasErrors('genre') ? 'has-error' : ''}">
                         <label>Stilrichtung</label>
                         <select name="genre" type="text" placeholder="Stilrichtung" class="form-control">
-                            <option>Rock</option>
-                            <option>Pop</option>
+                            <option disabled selected value> --- bitte auswählen --- </option>
+                            <option>Alternative</option>
                             <option>Elektro</option>
                             <option>HipHop</option>
-                            <option>Alternative</option>
+                            <option>Pop</option>
+                            <option>Rock</option>
                             <option>Schlager</option>
                             <option>Diverse</option>
                         </select>
@@ -91,11 +92,12 @@
                     <div class="form-group col-sm-12" th:classappend="${#fields.hasErrors('genre') ? 'has-error' : ''}">
                         <label>Stilrichtung</label>
                         <select name="genre" type="text" placeholder="Stilrichtung" class="form-control">
-                            <option>Rock</option>
-                            <option>Pop</option>
+                            <option disabled selected value> --- bitte auswählen --- </option>
+                            <option>Alternative</option>
                             <option>Elektro</option>
                             <option>HipHop</option>
-                            <option>Alternative</option>
+                            <option>Pop</option>
+                            <option>Rock</option>
                             <option>Schlager</option>
                             <option>Diverse</option>
                         </select>
