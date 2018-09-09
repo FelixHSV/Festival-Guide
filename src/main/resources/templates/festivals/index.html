@@ -8,141 +8,150 @@
     <title>Festivals</title>
 </head>
 <body>
-<div layout:fragment="content">
-    <div class="page-header">
-    </div>
-    <div class="container">
+    <div layout:fragment="content">
+        <div class="page-header">
+        </div>
+        <div class="container">
         <div class="row">
-
-            <!-- Liste aller Festivals -->
-            <div class="col-sm-6">
+            <div class="col-sm-8" style="">
                 <h2>Festivals</h2>
-                <ul class="list-group">
-                    <div th:each="festival : ${festivals}">
-                        <a th:href="${'/festivals/' + festival.id}" class="list-group-item list-group-item-action"
-                           th:text="${festival.name}"></a>
+                <div class="row">
+                    <form th:object="${dateFilterForm}" action="/filter/date" method="post">
+                        <div class="form-group col-sm-2" th:classappend="${#fields.hasErrors('month') ? 'has-error' : ''}">
+                            <input th:field="*{month}" name="month" type="number" placeholder="Monat" class="form-control">
+                            <span class="text-danger" th:errors="*{month}"/>
+                        </div>
+                        <div class="form-group col-sm-2" th:classappend="${#fields.hasErrors('year') ? 'has-error' : ''}">
+                            <input th:field="*{year}" name="year" type="number" placeholder="Jahr" class="form-control">
+                            <span class="text-danger" th:errors="*{year}"/>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <button type="submit" class="btn btn-default">
+                                <span class="glyphicon glyphicon-filter"></span> Filter
+                            </button>
+                        </div>
+                    </form>
+                    <form th:object="${genreFilterForm}" action="/filter/genre" method="post">
+                        <div class="form-group col-sm-3" th:classappend="${#fields.hasErrors('genre') ? 'has-error' : ''}">
+                            <select name="genre" type="text" placeholder="Stilrichtung" class="form-control">
+                                <option disabled selected value> --- bitte auswählen --- </option>
+                                <option>Alternative</option>
+                                <option>Elektro</option>
+                                <option>HipHop</option>
+                                <option>Pop</option>
+                                <option>Rock</option>
+                                <option>Schlager</option>
+                                <option>Diverse</option>
+                            </select>
+                            <span class="text-danger" th:errors="*{genre}"/>
+                        </div>
+                            <div class="form-group col-sm-2">
+                                <button type="submit" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-filter"></span> Filter
+                                </button>
+                            </div>
+                    </form>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <ul class="list-group">
+                            <div th:each="festival : ${festivals}">
+                                <a th:href="${'/festivals/' + festival.id}" class="list-group-item list-group-item-action"
+                                   th:text="${festival.name}"></a>
+                            </div>
+                        </ul>
                     </div>
-                </ul>
+                </div>
             </div>
-
-            <!-- Formular zum Filtern nach Datum -->
-            <div class="col-sm-6">
-                <form th:object="${dateFilterForm}" action="/filter/date"
-                      method="post">
-                    <h2>Festivals nach Datum filtern</h2>
-                    <div class="form-group col-sm-12" th:classappend="${#fields.hasErrors('month') ? 'has-error' : ''}">
-                        <label>Monat</label>
-                        <input th:field="*{month}" name="month" type="number" placeholder="Monat" class="form-control">
-                        <span class="text-danger" th:errors="*{month}"/>
-                    </div>
-                    <div class="form-group col-sm-12" th:classappend="${#fields.hasErrors('year') ? 'has-error' : ''}">
-                        <label>Jahr</label>
-                        <input th:field="*{year}" name="year" type="number" placeholder="Jahr" class="form-control">
-                        <span class="text-danger" th:errors="*{year}"/>
-                    </div>
-                    <div class="form-group col-sm-3">
-                        <button type="submit" class="btn btn-primary">Filtern</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Formular zum Filtern nach Genre -->
-            <div class="col-sm-6">
-                <form th:object="${genreFilterForm}" action="/filter/genre"
-                      method="post">
-                    <h2>Festivals nach Genre filtern</h2>
-                    <div class="form-group col-sm-12" th:classappend="${#fields.hasErrors('genre') ? 'has-error' : ''}">
-                        <label>Stilrichtung</label>
-                        <select name="genre" type="text" placeholder="Stilrichtung" class="form-control">
-                            <option disabled selected value> --- bitte auswählen --- </option>
-                            <option>Alternative</option>
-                            <option>Elektro</option>
-                            <option>HipHop</option>
-                            <option>Pop</option>
-                            <option>Rock</option>
-                            <option>Schlager</option>
-                            <option>Diverse</option>
-                        </select>
-                        <span class="text-danger" th:errors="*{genre}"/>
-                    </div>
-                    <div class="form-group col-sm-3">
-                        <button type="submit" class="btn btn-primary">Filtern</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Formular zur Festivalanlage, nur für Admins -->
-            <div class="col-sm-6">
-                <form sec:authorize="hasRole('ADMIN')" th:object="${festivalForm}" id="createForm" action="/festivals"
+            <div class="col-sm-4" sec:authorize="hasRole('ADMIN')" style="background-color:#d3d3d3; border-radius: 15px 50px 30px;">
+                <form th:object="${festivalForm}" id="createForm" action="/festivals"
                       method="post">
                     <div class="form-group">
-                        <h2>Neues Festival anlegen</h2>
+                        <h3>Neues Festival anlegen</h3>
                     </div>
-                    <div class="form-group col-sm-12" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
-                        <label>Name</label>
-                        <input name="name" type="text" placeholder="Name" class="form-control">
-                        <span class="text-danger" th:errors="*{name}"/>
+                    <div class="row">
+                        <div class="form-group col-sm-12" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
+                            <label>Name</label>
+                            <input name="name" type="text" placeholder="Name" class="form-control">
+                            <span class="text-danger" th:errors="*{name}"/>
+                        </div>
                     </div>
-                    <div class="form-group col-sm-12"
-                         th:classappend="${#fields.hasErrors('location') ? 'has-error' : ''}">
-                        <label>Location</label>
-                        <input name="location" type="text" placeholder="Location" class="form-control">
-                        <span class="text-danger" th:errors="*{location}"/>
+                    <div class="row">
+                        <div class="form-group col-sm-12"
+                             th:classappend="${#fields.hasErrors('location') ? 'has-error' : ''}">
+                            <label>Location</label>
+                            <input name="location" type="text" placeholder="Location" class="form-control">
+                            <span class="text-danger" th:errors="*{location}"/>
+                        </div>
                     </div>
-                    <div class="form-group col-sm-12" th:classappend="${#fields.hasErrors('genre') ? 'has-error' : ''}">
-                        <label>Stilrichtung</label>
-                        <select name="genre" type="text" placeholder="Stilrichtung" class="form-control">
-                            <option disabled selected value> --- bitte auswählen --- </option>
-                            <option>Alternative</option>
-                            <option>Elektro</option>
-                            <option>HipHop</option>
-                            <option>Pop</option>
-                            <option>Rock</option>
-                            <option>Schlager</option>
-                            <option>Diverse</option>
-                        </select>
-                        <span class="text-danger" th:errors="*{genre}"/>
+                    <div class="row">
+                        <div class="form-group col-sm-12" th:classappend="${#fields.hasErrors('genre') ? 'has-error' : ''}">
+                            <label>Stilrichtung</label>
+                            <select name="genre" type="text" placeholder="Stilrichtung" class="form-control">
+                                <option disabled selected value> --- bitte auswählen --- </option>
+                                <option>Alternative</option>
+                                <option>Elektro</option>
+                                <option>HipHop</option>
+                                <option>Pop</option>
+                                <option>Rock</option>
+                                <option>Schlager</option>
+                                <option>Diverse</option>
+                            </select>
+                            <span class="text-danger" th:errors="*{genre}"/>
+                        </div>
                     </div>
-                    <div class="col-sm-12"><label>Start-Datum</label></div>
-                    <div class="form-group col-sm-4" th:classappend="${#fields.hasErrors('day') ? 'has-error' : ''}">
-                        <input name="day" type="number" placeholder="Tag" min="1" step="1" max="31"
-                               class="form-control">
-                        <span class="text-danger" th:errors="*{day}"/>
+
+                    <div class="row"><div class="col-sm-12"><label>Start-Datum</label></div></div>
+                    <div class="row">
+                        <div class="form-group col-sm-4" th:classappend="${#fields.hasErrors('day') ? 'has-error' : ''}">
+                            <input name="day" type="number" placeholder="Tag" min="1" step="1" max="31"
+                                   class="form-control">
+                            <span class="text-danger" th:errors="*{day}"/>
+                        </div>
+                        <div class="form-group col-sm-4" th:classappend="${#fields.hasErrors('month') ? 'has-error' : ''}">
+                            <input name="month" placeholder="Monat" type="number" min="1" step="1" max="12"
+                                   class="form-control">
+                            <span class="text-danger" th:errors="*{month}"/>
+                        </div>
+                        <div class="form-group col-sm-4" th:classappend="${#fields.hasErrors('year') ? 'has-error' : ''}">
+                            <input name="year" placeholder="Jahr" type="number" min="2018" step="1" class="form-control">
+                            <span class="text-danger" th:errors="*{year}"/>
+                        </div>
                     </div>
-                    <div class="form-group col-sm-4" th:classappend="${#fields.hasErrors('month') ? 'has-error' : ''}">
-                        <input name="month" placeholder="Monat" type="number" min="1" step="1" max="12"
-                               class="form-control">
-                        <span class="text-danger" th:errors="*{month}"/>
+                    <div class="row"><div class="col-sm-12"><label>Ende-Datum</label></div></div>
+                    <div class="row">
+                        <div class="form-group col-sm-4" th:classappend="${#fields.hasErrors('endDay') ? 'has-error' : ''}">
+                            <input name="endDay" type="number" placeholder="Tag" min="1" step="1" max="31"
+                                   class="form-control">
+                            <span class="text-danger" th:errors="*{endDay}"/>
+                        </div>
+                        <div class="form-group col-sm-4"
+                             th:classappend="${#fields.hasErrors('endMonth') ? 'has-error' : ''}">
+                            <input name="endMonth" placeholder="Monat" type="number" min="1" step="1" max="12"
+                                   class="form-control">
+                            <span class="text-danger" th:errors="*{endMonth}"/>
+                        </div>
+                        <div class="form-group col-sm-4"
+                             th:classappend="${#fields.hasErrors('endYear') ? 'has-error' : ''}">
+                            <input name="endYear" placeholder="Jahr" type="number" min="2018" step="1" class="form-control">
+                            <span class="text-danger" th:errors="*{endYear}"/>
+                        </div>
                     </div>
-                    <div class="form-group col-sm-4" th:classappend="${#fields.hasErrors('year') ? 'has-error' : ''}">
-                        <input name="year" placeholder="Jahr" type="number" min="2018" step="1" class="form-control">
-                        <span class="text-danger" th:errors="*{year}"/>
-                    </div>
-                    <div class="col-sm-12"><label>Ende-Datum</label></div>
-                    <div class="form-group col-sm-4" th:classappend="${#fields.hasErrors('endDay') ? 'has-error' : ''}">
-                        <input name="endDay" type="number" placeholder="Tag" min="1" step="1" max="31"
-                               class="form-control">
-                        <span class="text-danger" th:errors="*{endDay}"/>
-                    </div>
-                    <div class="form-group col-sm-4"
-                         th:classappend="${#fields.hasErrors('endMonth') ? 'has-error' : ''}">
-                        <input name="endMonth" placeholder="Monat" type="number" min="1" step="1" max="12"
-                               class="form-control">
-                        <span class="text-danger" th:errors="*{endMonth}"/>
-                    </div>
-                    <div class="form-group col-sm-4"
-                         th:classappend="${#fields.hasErrors('endYear') ? 'has-error' : ''}">
-                        <input name="endYear" placeholder="Jahr" type="number" min="2018" step="1" class="form-control">
-                        <span class="text-danger" th:errors="*{endYear}"/>
-                    </div>
-                    <div class="form-group col-sm-3">
-                        <button type="submit" class="btn btn-primary">Festival Anlegen</button>
-                    </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-plus"></span> Festival anlegen
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                 </form>
             </div>
-
+        </div>
         </div>
     </div>
-</div>
+
 </body>
 </html>

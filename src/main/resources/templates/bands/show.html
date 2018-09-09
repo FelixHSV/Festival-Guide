@@ -12,37 +12,38 @@
     <div class="page-header">
     </div>
     <div class="container">
-
-        <!-- Name der Band und Favorisierungsformular -->
         <div class="row">
-            <h2 th:text="${band.name}" style="float: left;margin-right: 15px"></h2>
-            <form style="float: left; margin-top: 19px" th:if="${!favourized}"
-                  th:action="${'/bands/' + band.id + '/addToFavourites/' + user.id}" method="get">
-                <button sec:authorize="authenticated" type="submit" class="btn btn-default">
-                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                </button>
-            </form>
-            <form style="float: left; margin-top: 19px" th:if="${favourized}"
-                  th:action="${'/bands/' + band.id + '/removeFromFavourites/' + user.id}" method="get">
-                <button sec:authorize="authenticated" type="submit" class="btn btn-default">
-                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                </button>
-            </form>
-        </div>
-
-        <!-- Buttons zum Löschen und Bearbeiten für Admins -->
-        <div class="row">
-            <form sec:authorize="hasRole('ADMIN')" th:action="${'/bands/' + band.id + '/delete'}" method="post"
+            <!-- Name der Band und Favorisierungsformular -->
+            <div class="col-sm-4">
+                <h2 th:text="${band.name}" style="float: left;margin-right: 15px"></h2>
+                <form style="float: left; margin-top: 19px" th:if="${!favourized}"
+                      th:action="${'/bands/' + band.id + '/addToFavourites/' + user.id}" method="get">
+                    <button sec:authorize="authenticated" type="submit" class="btn btn-default">
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                    </button>
+                </form>
+                <form style="float: left; margin-top: 19px" th:if="${favourized}"
+                      th:action="${'/bands/' + band.id + '/removeFromFavourites/' + user.id}" method="get">
+                    <button sec:authorize="authenticated" type="submit" class="btn btn-default">
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                    </button>
+                </form>
+            </div>
+            <!-- Buttons zum Löschen und Bearbeiten für Admins -->
+            <form style="margin-top: 19px" sec:authorize="hasRole('ADMIN')" th:action="${'/bands/' + band.id + '/delete'}" method="post"
                   class="form" id="deleteFormBand">
-                <button type="button" class="btn btn-default" id="changeButtonBand">Bearbeiten</button>
-                <button type="submit" class="btn btn-danger">Löschen</button>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-default" id="changeButtonBand"><span class="glyphicon glyphicon-pencil"></span> Bearbeiten</button>
+                </div>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Löschen</button>
+                </div>
             </form>
-            <br>
         </div>
 
         <!-- Bearbeitungsformular für Admins -->
-        <div class="row" id="changeDivBand">
-            <h3>Band bearbeiten</h3>
+        <div class="row col-sm-8" id="changeDivBand" style="background-color:#d3d3d3; border-radius: 15px 50px 30px;">
+            <div class="col-sm-12"> <h3>Band bearbeiten</h3></div>
             <form sec:authorize="hasRole('ADMIN')" th:action="${'/bands/' + band.id}" method="post" id="changeForm"
                   th:object="${bandForm}">
                 <div class="form-group">
@@ -53,14 +54,13 @@
                         <span class="text-danger" th:errors="*{name}"/>
                     </div>
                     <div class="col-sm-2">
-                        <button type="submit" class="btn btn-primary">Ändern</button>
+                        <button type="submit" class="btn btn-default">Ändern</button>
                     </div>
                 </div>
             </form>
         </div>
-
         <!-- Anzeige der Festivals, auf denen die Band gebucht ist -->
-        <div class="row col-sm-6">
+        <div class="row col-sm-8">
             <table class="table">
                 <thead>
                 <tr>
@@ -83,6 +83,8 @@
             </table>
         </div>
     </div>
+
+
 </div>
 </body>
 </html>
