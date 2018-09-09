@@ -13,7 +13,6 @@
     </div>
     <div class="container">
         <div class="row">
-
             <!-- Liste der aller Bands -->
             <div class="col-sm-6">
                 <h2>Bands</h2>
@@ -28,19 +27,19 @@
                     </div>
                 </ul>
             </div>
-
+            <div class="col-sm-1"></div>
             <!-- Formular zur Bandanlage, nur für Admins -->
-            <div class="col-sm-6">
+            <div class="col-sm-4" style="background-color:#d3d3d3; border-radius: 15px 50px 30px;">
                 <form sec:authorize="hasRole('ADMIN')" th:object="${bandForm}" id="createForm" action="/bands"
                       method="post">
-                    <h2>Neue Band anlegen</h2>
+                    <div class="col-sm-12"><h3>Neue Band anlegen</h3></div>
                     <div class="form-group col-sm-12" th:classappend="${#fields.hasErrors('name') ? 'has-error' : ''}">
                         <label>Name</label>
                         <input th:field="*{name}" name="name" type="text" placeholder="Name" class="form-control">
                         <span class="text-danger" th:errors="*{name}"/>
                     </div>
-                    <div class="form-group col-sm-3">
-                        <button type="submit" class="btn btn-primary">Band Anlegen</button>
+                    <div class="form-group col-sm-12">
+                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Band erstellen</button>
                     </div>
                 </form>
             </div>
