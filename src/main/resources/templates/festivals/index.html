@@ -34,7 +34,7 @@
                     <form th:object="${genreFilterForm}" action="/filter/genre" method="post">
                         <div class="form-group col-sm-3" th:classappend="${#fields.hasErrors('genre') ? 'has-error' : ''}">
                             <select name="genre" type="text" placeholder="Stilrichtung" class="form-control">
-                                <option disabled selected value> --- bitte auswählen --- </option>
+                                <option disabled selected value> – Genre wählen – </option>
                                 <option>Alternative</option>
                                 <option>Elektro</option>
                                 <option>HipHop</option>
