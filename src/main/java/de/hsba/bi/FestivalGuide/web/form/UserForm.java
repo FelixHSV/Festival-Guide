@@ -9,7 +9,7 @@ public class UserForm {
     private String name;
 
     @NotEmpty(message = "Bitte ein Passwort eingeben")
-    @Min(value = 8, message = "Das Passwort muss mindestens 8 Zeichen lang sein.")
+    @Size(min = 8, message = "Das Passwort muss mindestens 8 Zeichen lang sein.")
     private String password;
 
     //Getter und Setter
