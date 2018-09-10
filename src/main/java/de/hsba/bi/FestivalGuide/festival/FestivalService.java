@@ -96,4 +96,29 @@ public class FestivalService {
         }
         this.repository.deleteById(id);
     }
+
+    //Genre-Filter anwenden
+    public List<Festival> filterGenre (String genre) {
+        List<Festival> allFestivals = this.getAll();
+        List<Festival> filteredFestivals = new ArrayList<>();
+        for (Festival festival: allFestivals) {
+            if ((festival.getGenre().equals(genre))) {
+                filteredFestivals.add(festival);
+            }
+        }
+        return filteredFestivals;
+    }
+
+    //Datumsfilter anwenden
+    public List<Festival> filterDate (Integer month, Integer year) {
+        List<Festival> allFestivals = this.getAll();
+        List<Festival> filteredFestivals = new ArrayList<>();
+        for (Festival festival: allFestivals) {
+        if ((festival.getMonth().equals(month) && (festival.getYear().equals(year))) || (festival.getEndMonth().equals(month) && festival.getEndYear().equals(year))) {
+            filteredFestivals.add(festival);
+        }
+        }
+        return filteredFestivals;
+    }
+
 }

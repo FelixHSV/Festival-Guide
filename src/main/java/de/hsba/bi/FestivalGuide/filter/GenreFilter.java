@@ -1,5 +1,6 @@
 package de.hsba.bi.FestivalGuide.filter;
 
+//Genrefilter
 public class GenreFilter {
     String genre;
 

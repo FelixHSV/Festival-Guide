@@ -28,10 +28,10 @@ public class UserService {
     @PostConstruct
     public void init() {
         if (userRepository.count() == 0) {
-            createUser("Admin", "admin", "ADMIN");
-            createUser("Niklas", "niklas", "USER");
-            createUser("Felix", "felix", "USER");
-            createUser("Malte", "malte", "USER");
+            createUser("Admin", "admin123", "ADMIN");
+            createUser("Niklas", "niklas123", "USER");
+            createUser("Felix", "felix123", "USER");
+            createUser("Malte", "malte123", "USER");
         }
     }
 
@@ -55,12 +55,10 @@ public class UserService {
     }
 
     //Check des Usernames für Registrierung
-    public boolean checkUsername (String name) {
-        List<User> users = this.findAll();
-        for (User user: users) {
-            if (user.getName().equals(name)) {
-                return true;
-            }
+    public boolean existsUsername (String name) {
+        if (userRepository.findByName(name)!= null)
+        {
+            return true;
         }
         return false;
     }

@@ -1,5 +1,6 @@
 package de.hsba.bi.FestivalGuide.filter;
 
+//Datumsfilter
 public class Filter {
     private Integer month;
     private Integer year;

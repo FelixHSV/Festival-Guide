@@ -12,7 +12,7 @@ public class DateFilterForm {
     private Integer month;
 
     @Min(value = 1959, message = "Das allererster Festival der Welt war 1959 das Newport Folk Festival.")
-    @Max(value = 2099, message = "Festivals in dem Zeitraum überlassen wir mal unseren Urenkeln")
+    @Max(value = 2099, message = "Festivals in dem Zeitraum überlassen wir mal unseren Nachkommen.")
     @NotNull(message = "Bitte ein Jahr eingeben")
     private Integer year;
 

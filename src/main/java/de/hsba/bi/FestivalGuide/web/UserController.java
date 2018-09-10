@@ -36,7 +36,7 @@ public class UserController {
         if (userBinding.hasErrors()) {
             return "registration";
         }
-        if (userService.checkUsername(userForm.getName())) {
+        if (userService.existsUsername(userForm.getName())) {
             model.addAttribute("usernameExists","Der gewählte Username existiert bereits!");
             return "registration";
         } else {
